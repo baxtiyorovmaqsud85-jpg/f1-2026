@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formula 1 · 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;700;900&family=Rajdhani:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Rajdhani',sans-serif;background:#0f0f0f;color:#f0f0f0;min-height:100vh}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:#1a1a1a}
+::-webkit-scrollbar-thumb{background:#e10600;border-radius:3px}
+
+.f1-app{max-width:1200px;margin:0 auto;padding:0 0 40px}
+
+.hero{background:linear-gradient(135deg,#e10600 0%,#a00000 100%);padding:32px 32px 24px;position:relative;overflow:hidden;border-radius:0 0 16px 16px}
+.hero::before{content:'F1';position:absolute;right:-20px;top:-30px;font-family:'Exo 2',sans-serif;font-size:220px;font-weight:900;color:rgba(255,255,255,0.06);line-height:1;pointer-events:none;user-select:none}
+.hero::after{content:'2026';position:absolute;right:20px;bottom:-10px;font-family:'Exo 2',sans-serif;font-size:80px;font-weight:900;color:rgba(255,255,255,0.08);line-height:1;pointer-events:none;user-select:none}
+.hero-title{font-family:'Exo 2',sans-serif;font-size:40px;font-weight:900;color:#fff;letter-spacing:-1px;line-height:1}
+.hero-sub{font-size:13px;color:rgba(255,255,255,0.7);margin-top:6px;font-weight:500;letter-spacing:2px;text-transform:uppercase}
+.hero-stats{display:flex;gap:16px;margin-top:24px}
+.hero-stat{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.15);border-radius:10px;padding:10px 20px;text-align:center}
+.hero-stat-num{font-family:'Exo 2',sans-serif;font-size:28px;font-weight:700;color:#fff}
+.hero-stat-lbl{font-size:11px;color:rgba(255,255,255,0.65);text-transform:uppercase;letter-spacing:1px}
+
+.filter-bar{background:#1a1a1a;border-bottom:1px solid #2a2a2a;padding:10px 32px;display:flex;gap:8px;overflow-x:auto;scrollbar-width:thin}
+.filter-bar::-webkit-scrollbar{height:3px}
+.f-item{display:flex;align-items:center;gap:6px;white-space:nowrap;padding:6px 14px;border-radius:20px;cursor:pointer;font-size:13px;font-weight:600;color:#888;border:1px solid transparent;transition:all 0.15s;user-select:none}
+.f-item:hover{background:#252525;border-color:#333;color:#ddd}
+.f-item.active{background:#e10600;color:#fff;border-color:#e10600}
+
+.tabs{display:flex;gap:0;padding:0 32px;background:#151515;border-bottom:1px solid #2a2a2a}
+.tab{padding:14px 22px;font-size:14px;font-weight:600;color:#666;cursor:pointer;border-bottom:2px solid transparent;letter-spacing:0.5px;transition:all 0.15s;user-select:none}
+.tab.active{color:#e10600;border-bottom-color:#e10600}
+.tab:hover:not(.active){color:#ccc}
+
+.content{padding:28px 32px}
+
+.teams-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+.team-card{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:14px;overflow:hidden;cursor:pointer;transition:border-color 0.15s,transform 0.1s,box-shadow 0.15s}
+.team-card:hover{border-color:#444;transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.4)}
+.team-header{padding:16px 18px 12px;border-left:5px solid var(--tc)}
+.team-name{font-family:'Exo 2',sans-serif;font-size:17px;font-weight:700;color:#fff}
+.team-base{font-size:12px;color:#666;margin-top:3px}
+.team-engine-badge{display:inline-block;font-size:11px;padding:3px 10px;border-radius:10px;background:#252525;color:#888;border:1px solid #333;margin-top:6px}
+.team-drivers{display:flex;gap:10px;padding:10px 18px 16px}
+.driver-chip{flex:1;background:#252525;border-radius:10px;padding:10px 12px;border:1px solid #2e2e2e}
+.driver-num{font-family:'Exo 2',sans-serif;font-size:24px;font-weight:900;color:var(--tc);line-height:1}
+.driver-name{font-size:13px;font-weight:600;color:#e8e8e8;margin-top:3px;line-height:1.2}
+.driver-nat{font-size:11px;color:#666;margin-top:2px}
+.driver-badge{display:inline-block;font-size:10px;padding:2px 7px;border-radius:8px;margin-top:4px;font-weight:600}
+.badge-champ{background:#3d3000;color:#ffd700;border:1px solid #554400}
+.badge-rookie{background:#003320;color:#00e676;border:1px solid #005533}
+.badge-veteran{background:#1a1a3a;color:#8888ff;border:1px solid #2a2a55}
+
+.section-title{font-family:'Exo 2',sans-serif;font-size:20px;font-weight:700;color:#fff;margin-bottom:16px;letter-spacing:-0.3px}
+.drivers-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.driver-card{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:12px;padding:14px 16px;display:flex;gap:12px;align-items:flex-start;cursor:default;transition:border-color 0.15s}
+.driver-card:hover{border-color:#444}
+.drv-num-circle{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Exo 2',sans-serif;font-size:16px;font-weight:900;color:#fff;flex-shrink:0}
+.drv-info{}
+.drv-full{font-size:14px;font-weight:600;color:#eee;line-height:1.2}
+.drv-team{font-size:12px;font-weight:600;margin-top:2px}
+.drv-nat{font-size:13px;margin-top:3px;color:#888}
+
+.std-section{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:700px){.std-section{grid-template-columns:1fr}}
+.std-card{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:12px;overflow:hidden}
+.std-head{background:#e10600;padding:12px 16px}
+.std-head-title{font-family:'Exo 2',sans-serif;font-size:13px;font-weight:700;color:#fff;letter-spacing:1px;text-transform:uppercase}
+.std-row{display:flex;align-items:center;gap:12px;padding:10px 16px;border-bottom:1px solid #222}
+.std-row:last-child{border-bottom:none}
+.std-row:hover{background:#202020}
+.std-pos{font-family:'Exo 2',sans-serif;font-weight:700;font-size:14px;color:#555;width:22px;flex-shrink:0}
+.std-pos.top3{color:#e10600}
+.std-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.std-name{font-size:13px;font-weight:600;color:#ddd;flex:1}
+.std-pts{font-family:'Exo 2',sans-serif;font-size:15px;font-weight:700;color:#fff}
+.std-pts-sub{font-size:10px;color:#555}
+
+.info-box{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:12px;padding:20px 24px;margin-bottom:20px}
+.info-box h3{font-family:'Exo 2',sans-serif;font-size:16px;font-weight:700;color:#e10600;margin-bottom:10px}
+.info-box p{font-size:14px;color:#999;line-height:1.7}
+.info-box ul{font-size:14px;color:#999;line-height:1.9;padding-left:20px}
+.info-box ul li span{color:#ddd;font-weight:600}
+</style>
+</head>
+<body>
+<div class="f1-app">
+
+<div class="hero">
+  <div class="hero-title">Formula 1 · 2026</div>
+  <div class="hero-sub">Yangi era — Yangi qoidalar — 11 jamoa</div>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="hero-stat-num">11</div><div class="hero-stat-lbl">Jamoa</div></div>
+    <div class="hero-stat"><div class="hero-stat-num">22</div><div class="hero-stat-lbl">Haydovchi</div></div>
+    <div class="hero-stat"><div class="hero-stat-num">24</div><div class="hero-stat-lbl">Poyga</div></div>
+    <div class="hero-stat"><div class="hero-stat-num">2</div><div class="hero-stat-lbl">Yangi jamoa</div></div>
+  </div>
+</div>
+
+<div class="filter-bar" id="filter-bar">
+  <div class="f-item active" onclick="filterTeam('all',this)">Barchasi</div>
+  <div class="f-item" onclick="filterTeam('mclaren',this)"><span style="color:#FF8000">●</span> McLaren</div>
+  <div class="f-item" onclick="filterTeam('ferrari',this)"><span style="color:#E8002D">●</span> Ferrari</div>
+  <div class="f-item" onclick="filterTeam('mercedes',this)"><span style="color:#27F4D2">●</span> Mercedes</div>
+  <div class="f-item" onclick="filterTeam('redbull',this)"><span style="color:#3671C6">●</span> Red Bull</div>
+  <div class="f-item" onclick="filterTeam('williams',this)"><span style="color:#64C4FF">●</span> Williams</div>
+  <div class="f-item" onclick="filterTeam('aston',this)"><span style="color:#229971">●</span> Aston Martin</div>
+  <div class="f-item" onclick="filterTeam('alpine',this)"><span style="color:#0093CC">●</span> Alpine</div>
+  <div class="f-item" onclick="filterTeam('haas',this)"><span style="color:#B6BABD">●</span> Haas</div>
+  <div class="f-item" onclick="filterTeam('racingbulls',this)"><span style="color:#6692FF">●</span> Racing Bulls</div>
+  <div class="f-item" onclick="filterTeam('audi',this)"><span style="color:#B5B5B5">●</span> Audi</div>
+  <div class="f-item" onclick="filterTeam('cadillac',this)"><span style="color:#C8B900">●</span> Cadillac</div>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="switchTab('teams',this)">🏎️ Jamoalar</div>
+  <div class="tab" onclick="switchTab('drivers',this)">👤 Haydovchilar</div>
+  <div class="tab" onclick="switchTab('standings',this)">🏆 Jadval</div>
+  <div class="tab" onclick="switchTab('info',this)">ℹ️ Ma'lumot</div>
+</div>
+
+<div class="content" id="content-area"></div>
+</div>
+
+<script>
+const teams=[
+  {id:'mclaren',color:'#FF8000',name:'McLaren Mastercard',base:'Woking, UK',engine:'Mercedes',drivers:[{num:4,name:'Lando Norris',nat:'🇬🇧 Britaniya',badge:'champ',badgeText:'2025 Chempion'},{num:81,name:'Oscar Piastri',nat:'🇦🇺 Avstraliya',badge:''}]},
+  {id:'ferrari',color:'#E8002D',name:'Scuderia Ferrari HP',base:'Maranello, Italiya',engine:'Ferrari',drivers:[{num:16,name:'Charles Leclerc',nat:'🇲🇨 Monako',badge:''},{num:44,name:'Lewis Hamilton',nat:'🇬🇧 Britaniya',badge:'veteran',badgeText:'7× Chempion'}]},
+  {id:'mercedes',color:'#27F4D2',name:'Mercedes-AMG Petronas',base:'Brackley, UK',engine:'Mercedes',drivers:[{num:63,name:'George Russell',nat:'🇬🇧 Britaniya',badge:''},{num:12,name:'Kimi Antonelli',nat:'🇮🇹 Italiya',badge:''}]},
+  {id:'redbull',color:'#3671C6',name:'Oracle Red Bull Racing',base:'Milton Keynes, UK',engine:'Honda RBPT',drivers:[{num:1,name:'Max Verstappen',nat:'🇳🇱 Niderlandiya',badge:'veteran',badgeText:'4× Chempion'},{num:6,name:'Isack Hadjar',nat:'🇫🇷 Fransiya',badge:''}]},
+  {id:'williams',color:'#64C4FF',name:'Atlassian Williams F1',base:'Grove, UK',engine:'Mercedes',drivers:[{num:23,name:'Alexander Albon',nat:'🇹🇭 Tailand',badge:''},{num:55,name:'Carlos Sainz Jr.',nat:'🇪🇸 Ispaniya',badge:''}]},
+  {id:'aston',color:'#229971',name:'Aston Martin Aramco',base:'Silverstone, UK',engine:'Mercedes',drivers:[{num:14,name:'Fernando Alonso',nat:'🇪🇸 Ispaniya',badge:'veteran',badgeText:'2× Chempion'},{num:18,name:'Lance Stroll',nat:'🇨🇦 Kanada',badge:''}]},
+  {id:'alpine',color:'#0093CC',name:'BWT Alpine F1',base:'Enstone, UK',engine:'Renault',drivers:[{num:10,name:'Pierre Gasly',nat:'🇫🇷 Fransiya',badge:''},{num:43,name:'Franco Colapinto',nat:'🇦🇷 Argentina',badge:''}]},
+  {id:'haas',color:'#B6BABD',name:'TGR Haas F1',base:'Kannapolis, AQSh',engine:'Ferrari',drivers:[{num:87,name:'Oliver Bearman',nat:'🇬🇧 Britaniya',badge:''},{num:31,name:'Esteban Ocon',nat:'🇫🇷 Fransiya',badge:''}]},
+  {id:'racingbulls',color:'#6692FF',name:'Visa Cash App Racing Bulls',base:'Faenza, Italiya',engine:'Honda RBPT',drivers:[{num:30,name:'Liam Lawson',nat:'🇳🇿 Yangi Zelandiya',badge:''},{num:41,name:'Arvid Lindblad',nat:'🇬🇧 Britaniya',badge:'rookie',badgeText:'Rookie'}]},
+  {id:'audi',color:'#B5B5B5',name:'Audi Revolut F1',base:'Hinwil, Shveytsariya',engine:'Ferrari',drivers:[{num:27,name:'Nico Hülkenberg',nat:'🇩🇪 Germaniya',badge:''},{num:5,name:'Gabriel Bortoleto',nat:'🇧🇷 Braziliya',badge:''}]},
+  {id:'cadillac',color:'#C8B900',name:'Cadillac F1 Team',base:'Indianapolis, AQSh',engine:'Ferrari',drivers:[{num:11,name:'Sergio Pérez',nat:'🇲🇽 Meksika',badge:''},{num:77,name:'Valtteri Bottas',nat:'🇫🇮 Finlandiya',badge:'veteran',badgeText:'Veteran'}]},
+];
+
+const driversStandings=[
+  {pos:1,name:'Kimi Antonelli',team:'Mercedes',teamId:'mercedes',pts:100},
+  {pos:2,name:'George Russell',team:'Mercedes',teamId:'mercedes',pts:80},
+  {pos:3,name:'Charles Leclerc',team:'Ferrari',teamId:'ferrari',pts:59},
+  {pos:4,name:'Lando Norris',team:'McLaren',teamId:'mclaren',pts:51},
+  {pos:5,name:'Lewis Hamilton',team:'Ferrari',teamId:'ferrari',pts:51},
+  {pos:6,name:'Oscar Piastri',team:'McLaren',teamId:'mclaren',pts:42},
+  {pos:7,name:'Max Verstappen',team:'Red Bull',teamId:'redbull',pts:30},
+  {pos:8,name:'Pierre Gasly',team:'Alpine',teamId:'alpine',pts:23},
+  {pos:9,name:'Carlos Sainz',team:'Williams',teamId:'williams',pts:18},
+  {pos:10,name:'Franco Colapinto',team:'Alpine',teamId:'alpine',pts:15},
+];
+
+const constructorsStandings=[
+  {pos:1,name:'Mercedes',teamId:'mercedes',pts:180},
+  {pos:2,name:'Ferrari',teamId:'ferrari',pts:110},
+  {pos:3,name:'McLaren',teamId:'mclaren',pts:94},
+  {pos:4,name:'Red Bull',teamId:'redbull',pts:30},
+  {pos:5,name:'Alpine',teamId:'alpine',pts:23},
+  {pos:6,name:'Williams',teamId:'williams',pts:18},
+  {pos:7,name:'Aston Martin',teamId:'aston',pts:5},
+  {pos:8,name:'Haas',teamId:'haas',pts:2},
+  {pos:9,name:'Racing Bulls',teamId:'racingbulls',pts:1},
+  {pos:10,name:'Audi',teamId:'audi',pts:0},
+  {pos:11,name:'Cadillac',teamId:'cadillac',pts:0},
+];
+
+let currentTab='teams';
+let currentFilter='all';
+
+function getTeamColor(id){const t=teams.find(x=>x.id===id);return t?t.color:'#888';}
+
+function filterTeam(id,el){
+  currentFilter=id;
+  document.querySelectorAll('.f-item').forEach(x=>x.classList.remove('active'));
+  el.classList.add('active');
+  render();
+}
+
+function switchTab(tab,el){
+  currentTab=tab;
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  el.classList.add('active');
+  render();
+}
+
+function render(){
+  const area=document.getElementById('content-area');
+  if(currentTab==='teams') renderTeams(area);
+  else if(currentTab==='drivers') renderDrivers(area);
+  else if(currentTab==='standings') renderStandings(area);
+  else renderInfo(area);
+}
+
+function renderTeams(area){
+  const list=currentFilter==='all'?teams:teams.filter(t=>t.id===currentFilter);
+  area.innerHTML=`<div class="teams-grid">${list.map(t=>`
+  <div class="team-card" style="--tc:${t.color}">
+    <div class="team-header">
+      <div class="team-name">${t.name}</div>
+      <div class="team-base">📍 ${t.base}</div>
+      <span class="team-engine-badge">⚙️ ${t.engine}</span>
+    </div>
+    <div class="team-drivers">
+      ${t.drivers.map(d=>`
+      <div class="driver-chip">
+        <div class="driver-num">${d.num}</div>
+        <div class="driver-name">${d.name}</div>
+        <div class="driver-nat">${d.nat}</div>
+        ${d.badge?`<span class="driver-badge badge-${d.badge}">${d.badgeText}</span>`:''}
+      </div>`).join('')}
+    </div>
+  </div>`).join('')}</div>`;
+}
+
+function renderDrivers(area){
+  const all=[];
+  const list=currentFilter==='all'?teams:teams.filter(t=>t.id===currentFilter);
+  list.forEach(t=>t.drivers.forEach(d=>all.push({...d,teamName:t.name,teamId:t.id,color:t.color})));
+  area.innerHTML=`<div class="section-title">2026 Barcha haydovchilar (${all.length} ta)</div>
+  <div class="drivers-list">${all.map(d=>`
+  <div class="driver-card">
+    <div class="drv-num-circle" style="background:${d.color}">${d.num}</div>
+    <div class="drv-info">
+      <div class="drv-full">${d.name}</div>
+      <div class="drv-team" style="color:${d.color}">${d.teamName}</div>
+      <div class="drv-nat">${d.nat}</div>
+      ${d.badge?`<span class="driver-badge badge-${d.badge}">${d.badgeText}</span>`:''}
+    </div>
+  </div>`).join('')}</div>`;
+}
+
+function renderStandings(area){
+  area.innerHTML=`<div class="std-section">
+  <div>
+    <div class="section-title">Haydovchilar chempionati</div>
+    <div class="std-card">
+      <div class="std-head"><div class="std-head-title">Haydovchilar reytingi</div></div>
+      ${driversStandings.map(d=>`
+      <div class="std-row">
+        <div class="std-pos ${d.pos<=3?'top3':''}">${d.pos}</div>
+        <div class="std-dot" style="background:${getTeamColor(d.teamId)}"></div>
+        <div class="std-name">${d.name}<br><span style="font-size:11px;color:#555">${d.team}</span></div>
+        <div style="text-align:right"><div class="std-pts">${d.pts}</div><div class="std-pts-sub">ball</div></div>
+      </div>`).join('')}
+    </div>
+  </div>
+  <div>
+    <div class="section-title">Konstruktorlar chempionati</div>
+    <div class="std-card">
+      <div class="std-head"><div class="std-head-title">Jamoalar reytingi</div></div>
+      ${constructorsStandings.map(c=>`
+      <div class="std-row">
+        <div class="std-pos ${c.pos<=3?'top3':''}">${c.pos}</div>
+        <div class="std-dot" style="background:${getTeamColor(c.teamId)}"></div>
+        <div class="std-name">${c.name}</div>
+        <div style="text-align:right"><div class="std-pts">${c.pts}</div><div class="std-pts-sub">ball</div></div>
+      </div>`).join('')}
+    </div>
+  </div>
+  </div>`;
+}
+
+function renderInfo(area){
+  area.innerHTML=`
+  <div class="info-box">
+    <h3>2026 — Yangi era</h3>
+    <p>2026 yilgi Formula 1 sezoni sport tarixidagi eng katta texnik o'zgarishlar bilan boshlanadi. Yangi aerodynamika qoidalari, kichikroq mashinalar va yangi elektr dvigatel qoidalari kiritildi.</p>
+  </div>
+  <div class="info-box">
+    <h3>Yangi jamoalar</h3>
+    <ul>
+      <li><span>Cadillac F1</span> — Amerika jamoasi. 2016 yildan beri birinchi yangi jamoa. Haydovchilar: Sergio Pérez va Valtteri Bottas. Ferrari dvigateli bilan ishlaydi.</li>
+      <li><span>Audi F1</span> — Sobiq Sauber jamoasi Audi nomi bilan qayta brending qilindi. Haydovchilar: Nico Hülkenberg va Gabriel Bortoleto.</li>
+    </ul>
+  </div>
+  <div class="info-box">
+    <h3>Asosiy yangiliklar</h3>
+    <ul>
+      <li><span>Lewis Hamilton</span> — Ferrari rangini kiydi (sobiq Mercedes haydovchisi)</li>
+      <li><span>Lando Norris</span> — 2025 yilgi jahon chempioni</li>
+      <li><span>Arvid Lindblad</span> — 2026 yildagi yagona rookie haydovchi</li>
+      <li><span>Max Verstappen</span> — Red Bull bilan 2028 yilgacha shartnoma imzoladi</li>
+      <li><span>Kimi Antonelli</span> — 2026 mavsum boshida jadval yetakchisi (100 ball)</li>
+    </ul>
+  </div>
+  <div class="info-box">
+    <h3>2026 Mavsum holati (19 may holatiga)</h3>
+    <ul>
+      <li>Konstruktorlar: <span>Mercedes — 180 ball (1-o'rin)</span></li>
+      <li>Haydovchilar: <span>Kimi Antonelli — 100 ball (1-o'rin)</span></li>
+      <li>Navbatdagi poyga: <span>Kanada GP — Monreal</span></li>
+    </ul>
+  </div>`;
+}
+
+render();
+</script>
+</body>
+</html>
