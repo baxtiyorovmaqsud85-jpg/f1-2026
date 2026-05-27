@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Formula 1 · 2026</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;700;900&family=Rajdhani:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -12,292 +11,361 @@ body{font-family:'Rajdhani',sans-serif;background:#0f0f0f;color:#f0f0f0;min-heig
 ::-webkit-scrollbar{width:6px;height:6px}
 ::-webkit-scrollbar-track{background:#1a1a1a}
 ::-webkit-scrollbar-thumb{background:#e10600;border-radius:3px}
+.app{max-width:1200px;margin:0 auto;padding-bottom:40px}
 
-.f1-app{max-width:1200px;margin:0 auto;padding:0 0 40px}
+/* HERO */
+.hero{background:linear-gradient(135deg,#e10600 0%,#a00000 100%);padding:32px;position:relative;overflow:hidden;border-radius:0 0 20px 20px}
+.hero::before{content:'F1';position:absolute;right:-20px;top:-30px;font-family:'Exo 2',sans-serif;font-size:220px;font-weight:900;color:rgba(255,255,255,0.06);line-height:1;pointer-events:none}
+.hero-title{font-family:'Exo 2',sans-serif;font-size:42px;font-weight:900;color:#fff;letter-spacing:-1px}
+.hero-sub{font-size:13px;color:rgba(255,255,255,0.7);margin-top:6px;letter-spacing:2px;text-transform:uppercase}
+.live-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(0,0,0,0.2);border:1px solid rgba(255,255,255,0.2);border-radius:20px;padding:4px 14px;font-size:12px;color:#fff;margin-top:12px}
+.live-dot{width:8px;height:8px;border-radius:50%;background:#00ff88;animation:blink 1.5s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.2}}
+.hero-stats{display:flex;gap:12px;margin-top:18px;flex-wrap:wrap}
+.hstat{background:rgba(0,0,0,0.2);border:1px solid rgba(255,255,255,0.15);border-radius:12px;padding:10px 22px;text-align:center}
+.hstat-num{font-family:'Exo 2',sans-serif;font-size:30px;font-weight:900;color:#fff}
+.hstat-lbl{font-size:11px;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:1px}
 
-.hero{background:linear-gradient(135deg,#e10600 0%,#a00000 100%);padding:32px 32px 24px;position:relative;overflow:hidden;border-radius:0 0 16px 16px}
-.hero::before{content:'F1';position:absolute;right:-20px;top:-30px;font-family:'Exo 2',sans-serif;font-size:220px;font-weight:900;color:rgba(255,255,255,0.06);line-height:1;pointer-events:none;user-select:none}
-.hero::after{content:'2026';position:absolute;right:20px;bottom:-10px;font-family:'Exo 2',sans-serif;font-size:80px;font-weight:900;color:rgba(255,255,255,0.08);line-height:1;pointer-events:none;user-select:none}
-.hero-title{font-family:'Exo 2',sans-serif;font-size:40px;font-weight:900;color:#fff;letter-spacing:-1px;line-height:1}
-.hero-sub{font-size:13px;color:rgba(255,255,255,0.7);margin-top:6px;font-weight:500;letter-spacing:2px;text-transform:uppercase}
-.hero-stats{display:flex;gap:16px;margin-top:24px}
-.hero-stat{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.15);border-radius:10px;padding:10px 20px;text-align:center}
-.hero-stat-num{font-family:'Exo 2',sans-serif;font-size:28px;font-weight:700;color:#fff}
-.hero-stat-lbl{font-size:11px;color:rgba(255,255,255,0.65);text-transform:uppercase;letter-spacing:1px}
-
-.filter-bar{background:#1a1a1a;border-bottom:1px solid #2a2a2a;padding:10px 32px;display:flex;gap:8px;overflow-x:auto;scrollbar-width:thin}
-.filter-bar::-webkit-scrollbar{height:3px}
-.f-item{display:flex;align-items:center;gap:6px;white-space:nowrap;padding:6px 14px;border-radius:20px;cursor:pointer;font-size:13px;font-weight:600;color:#888;border:1px solid transparent;transition:all 0.15s;user-select:none}
-.f-item:hover{background:#252525;border-color:#333;color:#ddd}
+/* NAV */
+.filter-bar{background:#181818;border-bottom:1px solid #222;padding:10px 28px;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
+.filter-bar::-webkit-scrollbar{display:none}
+.f-item{white-space:nowrap;padding:6px 14px;border-radius:20px;cursor:pointer;font-size:13px;font-weight:600;color:#666;border:1px solid transparent;transition:all 0.15s;user-select:none}
+.f-item:hover{background:#222;border-color:#333;color:#ccc}
 .f-item.active{background:#e10600;color:#fff;border-color:#e10600}
-
-.tabs{display:flex;gap:0;padding:0 32px;background:#151515;border-bottom:1px solid #2a2a2a}
-.tab{padding:14px 22px;font-size:14px;font-weight:600;color:#666;cursor:pointer;border-bottom:2px solid transparent;letter-spacing:0.5px;transition:all 0.15s;user-select:none}
+.tabs{display:flex;padding:0 28px;background:#111;border-bottom:1px solid #222}
+.tab{padding:14px 22px;font-size:14px;font-weight:600;color:#555;cursor:pointer;border-bottom:2px solid transparent;transition:all 0.15s;user-select:none}
 .tab.active{color:#e10600;border-bottom-color:#e10600}
-.tab:hover:not(.active){color:#ccc}
+.tab:hover:not(.active){color:#aaa}
+.content{padding:24px 28px}
+.sec-title{font-family:'Exo 2',sans-serif;font-size:20px;font-weight:700;color:#fff;margin-bottom:16px}
 
-.content{padding:28px 32px}
+/* LOADING */
+.loading{text-align:center;padding:60px;color:#444}
+.spin{width:36px;height:36px;border:3px solid #222;border-top-color:#e10600;border-radius:50%;animation:rot 0.8s linear infinite;margin:0 auto 14px}
+@keyframes rot{to{transform:rotate(360deg)}}
 
-.teams-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
-.team-card{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:14px;overflow:hidden;cursor:pointer;transition:border-color 0.15s,transform 0.1s,box-shadow 0.15s}
-.team-card:hover{border-color:#444;transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.4)}
-.team-header{padding:16px 18px 12px;border-left:5px solid var(--tc)}
-.team-name{font-family:'Exo 2',sans-serif;font-size:17px;font-weight:700;color:#fff}
-.team-base{font-size:12px;color:#666;margin-top:3px}
-.team-engine-badge{display:inline-block;font-size:11px;padding:3px 10px;border-radius:10px;background:#252525;color:#888;border:1px solid #333;margin-top:6px}
-.team-drivers{display:flex;gap:10px;padding:10px 18px 16px}
-.driver-chip{flex:1;background:#252525;border-radius:10px;padding:10px 12px;border:1px solid #2e2e2e}
-.driver-num{font-family:'Exo 2',sans-serif;font-size:24px;font-weight:900;color:var(--tc);line-height:1}
-.driver-name{font-size:13px;font-weight:600;color:#e8e8e8;margin-top:3px;line-height:1.2}
-.driver-nat{font-size:11px;color:#666;margin-top:2px}
-.driver-badge{display:inline-block;font-size:10px;padding:2px 7px;border-radius:8px;margin-top:4px;font-weight:600}
-.badge-champ{background:#3d3000;color:#ffd700;border:1px solid #554400}
-.badge-rookie{background:#003320;color:#00e676;border:1px solid #005533}
-.badge-veteran{background:#1a1a3a;color:#8888ff;border:1px solid #2a2a55}
+/* DRIVER AVATAR SVG */
+.avatar-wrap{position:relative;flex-shrink:0}
 
-.section-title{font-family:'Exo 2',sans-serif;font-size:20px;font-weight:700;color:#fff;margin-bottom:16px;letter-spacing:-0.3px}
-.drivers-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
-.driver-card{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:12px;padding:14px 16px;display:flex;gap:12px;align-items:flex-start;cursor:default;transition:border-color 0.15s}
-.driver-card:hover{border-color:#444}
-.drv-num-circle{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Exo 2',sans-serif;font-size:16px;font-weight:900;color:#fff;flex-shrink:0}
-.drv-info{}
-.drv-full{font-size:14px;font-weight:600;color:#eee;line-height:1.2}
-.drv-team{font-size:12px;font-weight:600;margin-top:2px}
-.drv-nat{font-size:13px;margin-top:3px;color:#888}
+/* TEAMS */
+.teams-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
+.team-card{background:#181818;border:1px solid #222;border-radius:14px;overflow:hidden;transition:all 0.15s}
+.team-card:hover{border-color:#3a3a3a;transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.5)}
+.team-hdr{padding:14px 16px 10px;border-left:5px solid var(--tc)}
+.team-nm{font-family:'Exo 2',sans-serif;font-size:16px;font-weight:700;color:#fff}
+.team-bs{font-size:12px;color:#555;margin-top:3px}
+.team-eng{display:inline-block;font-size:11px;padding:3px 10px;border-radius:10px;background:#222;color:#666;border:1px solid #2a2a2a;margin-top:6px}
+.team-drvs{display:flex;gap:10px;padding:10px 16px 14px}
+.drv-chip{flex:1;background:#202020;border-radius:10px;padding:12px;border:1px solid #282828;display:flex;gap:10px;align-items:center}
+.drv-av{width:54px;height:54px;flex-shrink:0}
+.drv-av svg{width:54px;height:54px}
+.drv-inf{}
+.drv-num{font-family:'Exo 2',sans-serif;font-size:22px;font-weight:900;color:var(--tc);line-height:1}
+.drv-nm{font-size:12px;font-weight:600;color:#ddd;margin-top:2px;line-height:1.3}
+.drv-nat{font-size:11px;color:#555;margin-top:2px}
+.dbadge{display:inline-block;font-size:10px;padding:2px 7px;border-radius:6px;margin-top:4px;font-weight:600}
+.bc{background:#2a2000;color:#ffd700;border:1px solid #443300}
+.bv{background:#101030;color:#7777ff;border:1px solid #202060}
+.br{background:#002210;color:#00dd66;border:1px solid #004422}
 
-.std-section{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-@media(max-width:700px){.std-section{grid-template-columns:1fr}}
-.std-card{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:12px;overflow:hidden}
-.std-head{background:#e10600;padding:12px 16px}
-.std-head-title{font-family:'Exo 2',sans-serif;font-size:13px;font-weight:700;color:#fff;letter-spacing:1px;text-transform:uppercase}
-.std-row{display:flex;align-items:center;gap:12px;padding:10px 16px;border-bottom:1px solid #222}
+/* DRIVERS GRID */
+.drvs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
+.drv-card{background:#181818;border:1px solid #222;border-radius:12px;overflow:hidden;transition:all 0.15s;cursor:default}
+.drv-card:hover{border-color:#3a3a3a;transform:translateY(-2px)}
+.drv-card-top{padding:16px 14px 10px;display:flex;flex-direction:column;align-items:center;gap:8px;background:linear-gradient(180deg,var(--tc-bg) 0%,#181818 100%)}
+.drv-card-av{width:70px;height:70px}
+.drv-card-av svg{width:70px;height:70px}
+.drv-card-body{padding:10px 12px 12px;border-top:3px solid var(--tc)}
+.drv-card-name{font-size:13px;font-weight:700;color:#eee;line-height:1.3}
+.drv-card-team{font-size:11px;font-weight:600;margin-top:3px}
+.drv-card-nat{font-size:12px;color:#555;margin-top:2px}
+
+/* STANDINGS */
+.std-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:680px){.std-grid{grid-template-columns:1fr}}
+.std-box{background:#181818;border:1px solid #222;border-radius:12px;overflow:hidden}
+.std-hd{background:#e10600;padding:11px 16px}
+.std-hd-t{font-family:'Exo 2',sans-serif;font-size:12px;font-weight:700;color:#fff;letter-spacing:1.5px;text-transform:uppercase}
+.std-row{display:flex;align-items:center;gap:10px;padding:9px 16px;border-bottom:1px solid #1e1e1e;transition:background 0.1s}
 .std-row:last-child{border-bottom:none}
-.std-row:hover{background:#202020}
-.std-pos{font-family:'Exo 2',sans-serif;font-weight:700;font-size:14px;color:#555;width:22px;flex-shrink:0}
-.std-pos.top3{color:#e10600}
-.std-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
-.std-name{font-size:13px;font-weight:600;color:#ddd;flex:1}
-.std-pts{font-family:'Exo 2',sans-serif;font-size:15px;font-weight:700;color:#fff}
-.std-pts-sub{font-size:10px;color:#555}
+.std-row:hover{background:#1e1e1e}
+.std-pos{font-family:'Exo 2',sans-serif;font-weight:700;font-size:13px;color:#444;width:20px;flex-shrink:0}
+.std-pos.t{color:#e10600}
+.std-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.std-nm{font-size:13px;font-weight:600;color:#ccc;flex:1;line-height:1.3}
+.std-sub{font-size:10px;color:#444}
+.std-pts{font-family:'Exo 2',sans-serif;font-size:14px;font-weight:700;color:#fff}
+.std-pts-lbl{font-size:10px;color:#444;text-align:right}
 
-.info-box{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:12px;padding:20px 24px;margin-bottom:20px}
-.info-box h3{font-family:'Exo 2',sans-serif;font-size:16px;font-weight:700;color:#e10600;margin-bottom:10px}
-.info-box p{font-size:14px;color:#999;line-height:1.7}
-.info-box ul{font-size:14px;color:#999;line-height:1.9;padding-left:20px}
-.info-box ul li span{color:#ddd;font-weight:600}
+/* SCHEDULE */
+.sch-list{display:flex;flex-direction:column;gap:8px}
+.r-card{background:#181818;border:1px solid #222;border-radius:12px;padding:12px 16px;display:flex;align-items:center;gap:14px;transition:all 0.15s}
+.r-card:hover{border-color:#333}
+.r-card.next{border-color:#e10600;border-width:1.5px;background:#1a0800}
+.r-card.done .r-nm{color:#444}
+.r-rnd{font-family:'Exo 2',sans-serif;font-size:20px;font-weight:900;color:#2a2a2a;width:32px;flex-shrink:0}
+.r-card.next .r-rnd{color:#e10600}
+.r-inf{flex:1}
+.r-nm{font-size:14px;font-weight:600;color:#ddd}
+.r-loc{font-size:12px;color:#444;margin-top:2px}
+.r-dt{font-family:'Exo 2',sans-serif;font-size:13px;font-weight:600;color:#555;white-space:nowrap}
+.r-card.next .r-dt{color:#e10600}
+.nlbl{background:#e10600;color:#fff;font-size:10px;padding:2px 7px;border-radius:6px;font-weight:700;margin-left:6px}
+.wlbl{font-size:11px;color:#555;margin-top:2px}
+.wlbl span{color:#e8c400}
 </style>
 </head>
 <body>
-<div class="f1-app">
+<div class="app">
 
 <div class="hero">
   <div class="hero-title">Formula 1 · 2026</div>
-  <div class="hero-sub">Yangi era — Yangi qoidalar — 11 jamoa</div>
+  <div class="hero-sub">Yangi era — 11 jamoa — 22 haydovchi</div>
+  <div class="live-badge"><div class="live-dot"></div> Avtomatik yangilanadi</div>
   <div class="hero-stats">
-    <div class="hero-stat"><div class="hero-stat-num">11</div><div class="hero-stat-lbl">Jamoa</div></div>
-    <div class="hero-stat"><div class="hero-stat-num">22</div><div class="hero-stat-lbl">Haydovchi</div></div>
-    <div class="hero-stat"><div class="hero-stat-num">24</div><div class="hero-stat-lbl">Poyga</div></div>
-    <div class="hero-stat"><div class="hero-stat-num">2</div><div class="hero-stat-lbl">Yangi jamoa</div></div>
+    <div class="hstat"><div class="hstat-num">11</div><div class="hstat-lbl">Jamoa</div></div>
+    <div class="hstat"><div class="hstat-num">22</div><div class="hstat-lbl">Haydovchi</div></div>
+    <div class="hstat"><div class="hstat-num" id="rc">24</div><div class="hstat-lbl">Poyga</div></div>
+    <div class="hstat"><div class="hstat-num" id="rd">–</div><div class="hstat-lbl">O'tkazildi</div></div>
   </div>
 </div>
 
-<div class="filter-bar" id="filter-bar">
-  <div class="f-item active" onclick="filterTeam('all',this)">Barchasi</div>
-  <div class="f-item" onclick="filterTeam('mclaren',this)"><span style="color:#FF8000">●</span> McLaren</div>
-  <div class="f-item" onclick="filterTeam('ferrari',this)"><span style="color:#E8002D">●</span> Ferrari</div>
-  <div class="f-item" onclick="filterTeam('mercedes',this)"><span style="color:#27F4D2">●</span> Mercedes</div>
-  <div class="f-item" onclick="filterTeam('redbull',this)"><span style="color:#3671C6">●</span> Red Bull</div>
-  <div class="f-item" onclick="filterTeam('williams',this)"><span style="color:#64C4FF">●</span> Williams</div>
-  <div class="f-item" onclick="filterTeam('aston',this)"><span style="color:#229971">●</span> Aston Martin</div>
-  <div class="f-item" onclick="filterTeam('alpine',this)"><span style="color:#0093CC">●</span> Alpine</div>
-  <div class="f-item" onclick="filterTeam('haas',this)"><span style="color:#B6BABD">●</span> Haas</div>
-  <div class="f-item" onclick="filterTeam('racingbulls',this)"><span style="color:#6692FF">●</span> Racing Bulls</div>
-  <div class="f-item" onclick="filterTeam('audi',this)"><span style="color:#B5B5B5">●</span> Audi</div>
-  <div class="f-item" onclick="filterTeam('cadillac',this)"><span style="color:#C8B900">●</span> Cadillac</div>
+<div class="filter-bar">
+  <div class="f-item active" onclick="ft('all',this)">Barchasi</div>
+  <div class="f-item" onclick="ft('mclaren',this)"><span style="color:#FF8000">●</span> McLaren</div>
+  <div class="f-item" onclick="ft('ferrari',this)"><span style="color:#E8002D">●</span> Ferrari</div>
+  <div class="f-item" onclick="ft('mercedes',this)"><span style="color:#27F4D2">●</span> Mercedes</div>
+  <div class="f-item" onclick="ft('redbull',this)"><span style="color:#3671C6">●</span> Red Bull</div>
+  <div class="f-item" onclick="ft('williams',this)"><span style="color:#64C4FF">●</span> Williams</div>
+  <div class="f-item" onclick="ft('aston',this)"><span style="color:#229971">●</span> Aston Martin</div>
+  <div class="f-item" onclick="ft('alpine',this)"><span style="color:#0093CC">●</span> Alpine</div>
+  <div class="f-item" onclick="ft('haas',this)"><span style="color:#B6BABD">●</span> Haas</div>
+  <div class="f-item" onclick="ft('racingbulls',this)"><span style="color:#6692FF">●</span> Racing Bulls</div>
+  <div class="f-item" onclick="ft('audi',this)"><span style="color:#B5B5B5">●</span> Audi</div>
+  <div class="f-item" onclick="ft('cadillac',this)"><span style="color:#C8B900">●</span> Cadillac</div>
 </div>
 
 <div class="tabs">
-  <div class="tab active" onclick="switchTab('teams',this)">🏎️ Jamoalar</div>
-  <div class="tab" onclick="switchTab('drivers',this)">👤 Haydovchilar</div>
-  <div class="tab" onclick="switchTab('standings',this)">🏆 Jadval</div>
-  <div class="tab" onclick="switchTab('info',this)">ℹ️ Ma'lumot</div>
+  <div class="tab active" onclick="sw('teams',this)">🏎️ Jamoalar</div>
+  <div class="tab" onclick="sw('drivers',this)">👤 Haydovchilar</div>
+  <div class="tab" onclick="sw('standings',this)">🏆 Jadval</div>
+  <div class="tab" onclick="sw('schedule',this)">📅 Kalendar</div>
 </div>
 
-<div class="content" id="content-area"></div>
+<div class="content" id="ca">
+  <div class="loading"><div class="spin"></div>Ma'lumotlar yuklanmoqda...</div>
+</div>
 </div>
 
 <script>
-const teams=[
-  {id:'mclaren',color:'#FF8000',name:'McLaren Mastercard',base:'Woking, UK',engine:'Mercedes',drivers:[{num:4,name:'Lando Norris',nat:'🇬🇧 Britaniya',badge:'champ',badgeText:'2025 Chempion'},{num:81,name:'Oscar Piastri',nat:'🇦🇺 Avstraliya',badge:''}]},
-  {id:'ferrari',color:'#E8002D',name:'Scuderia Ferrari HP',base:'Maranello, Italiya',engine:'Ferrari',drivers:[{num:16,name:'Charles Leclerc',nat:'🇲🇨 Monako',badge:''},{num:44,name:'Lewis Hamilton',nat:'🇬🇧 Britaniya',badge:'veteran',badgeText:'7× Chempion'}]},
+// Initials for each driver number
+const INIT={4:'LN',81:'OP',16:'CL',44:'LH',63:'GR',12:'KA',1:'MV',6:'IH',23:'AA',55:'CS',14:'FA',18:'LS',10:'PG',43:'FC',87:'OB',31:'EO',27:'NH',5:'GB',30:'LL',41:'AL',11:'SP',77:'VB'};
+
+function avatar(num, color, size=54){
+  const init=INIT[num]||'??';
+  const bg=color+'22';
+  const r=size/2;
+  // Generate unique pattern based on num
+  const h1=color;
+  const offset=num*7;
+  return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="rg${num}" cx="40%" cy="35%" r="65%">
+        <stop offset="0%" stop-color="${color}" stop-opacity="0.35"/>
+        <stop offset="100%" stop-color="${color}" stop-opacity="0.05"/>
+      </radialGradient>
+      <clipPath id="cp${num}"><circle cx="${r}" cy="${r}" r="${r}"/></clipPath>
+    </defs>
+    <circle cx="${r}" cy="${r}" r="${r}" fill="#1a1a1a"/>
+    <circle cx="${r}" cy="${r}" r="${r}" fill="url(#rg${num})"/>
+    <!-- helmet shape -->
+    <ellipse cx="${r}" cy="${r*1.1}" rx="${r*0.62}" ry="${r*0.58}" fill="${color}" opacity="0.18"/>
+    <ellipse cx="${r}" cy="${r*0.85}" rx="${r*0.52}" ry="${r*0.38}" fill="${color}" opacity="0.28"/>
+    <!-- visor -->
+    <ellipse cx="${r}" cy="${r*0.9}" rx="${r*0.38}" ry="${r*0.18}" fill="${color}" opacity="0.7"/>
+    <!-- number -->
+    <text x="${r}" y="${r*1.55}" text-anchor="middle" font-family="'Exo 2',sans-serif" font-weight="900" font-size="${size*0.26}" fill="${color}" opacity="0.9">${num}</text>
+    <!-- initials overlay -->
+    <text x="${r}" y="${r*0.98}" text-anchor="middle" font-family="'Exo 2',sans-serif" font-weight="700" font-size="${size*0.22}" fill="#ffffff" opacity="0.6">${init}</text>
+    <!-- border -->
+    <circle cx="${r}" cy="${r}" r="${r-1}" fill="none" stroke="${color}" stroke-width="1.5" opacity="0.4"/>
+  </svg>`;
+}
+
+const TEAMS=[
+  {id:'mclaren',color:'#FF8000',name:'McLaren Mastercard',base:'Woking, UK',engine:'Mercedes',drivers:[{num:4,name:'Lando Norris',nat:'🇬🇧 Britaniya',badge:'bc',bt:'2025 Chempion'},{num:81,name:'Oscar Piastri',nat:'🇦🇺 Avstraliya',badge:''}]},
+  {id:'ferrari',color:'#E8002D',name:'Scuderia Ferrari HP',base:'Maranello, Italiya',engine:'Ferrari',drivers:[{num:16,name:'Charles Leclerc',nat:'🇲🇨 Monako',badge:''},{num:44,name:'Lewis Hamilton',nat:'🇬🇧 Britaniya',badge:'bv',bt:'7× Chempion'}]},
   {id:'mercedes',color:'#27F4D2',name:'Mercedes-AMG Petronas',base:'Brackley, UK',engine:'Mercedes',drivers:[{num:63,name:'George Russell',nat:'🇬🇧 Britaniya',badge:''},{num:12,name:'Kimi Antonelli',nat:'🇮🇹 Italiya',badge:''}]},
-  {id:'redbull',color:'#3671C6',name:'Oracle Red Bull Racing',base:'Milton Keynes, UK',engine:'Honda RBPT',drivers:[{num:1,name:'Max Verstappen',nat:'🇳🇱 Niderlandiya',badge:'veteran',badgeText:'4× Chempion'},{num:6,name:'Isack Hadjar',nat:'🇫🇷 Fransiya',badge:''}]},
+  {id:'redbull',color:'#3671C6',name:'Oracle Red Bull Racing',base:'Milton Keynes, UK',engine:'Honda RBPT',drivers:[{num:1,name:'Max Verstappen',nat:'🇳🇱 Niderlandiya',badge:'bv',bt:'4× Chempion'},{num:6,name:'Isack Hadjar',nat:'🇫🇷 Fransiya',badge:'br',bt:'Rookie'}]},
   {id:'williams',color:'#64C4FF',name:'Atlassian Williams F1',base:'Grove, UK',engine:'Mercedes',drivers:[{num:23,name:'Alexander Albon',nat:'🇹🇭 Tailand',badge:''},{num:55,name:'Carlos Sainz Jr.',nat:'🇪🇸 Ispaniya',badge:''}]},
-  {id:'aston',color:'#229971',name:'Aston Martin Aramco',base:'Silverstone, UK',engine:'Mercedes',drivers:[{num:14,name:'Fernando Alonso',nat:'🇪🇸 Ispaniya',badge:'veteran',badgeText:'2× Chempion'},{num:18,name:'Lance Stroll',nat:'🇨🇦 Kanada',badge:''}]},
+  {id:'aston',color:'#229971',name:'Aston Martin Aramco',base:'Silverstone, UK',engine:'Mercedes',drivers:[{num:14,name:'Fernando Alonso',nat:'🇪🇸 Ispaniya',badge:'bv',bt:'2× Chempion'},{num:18,name:'Lance Stroll',nat:'🇨🇦 Kanada',badge:''}]},
   {id:'alpine',color:'#0093CC',name:'BWT Alpine F1',base:'Enstone, UK',engine:'Renault',drivers:[{num:10,name:'Pierre Gasly',nat:'🇫🇷 Fransiya',badge:''},{num:43,name:'Franco Colapinto',nat:'🇦🇷 Argentina',badge:''}]},
   {id:'haas',color:'#B6BABD',name:'TGR Haas F1',base:'Kannapolis, AQSh',engine:'Ferrari',drivers:[{num:87,name:'Oliver Bearman',nat:'🇬🇧 Britaniya',badge:''},{num:31,name:'Esteban Ocon',nat:'🇫🇷 Fransiya',badge:''}]},
-  {id:'racingbulls',color:'#6692FF',name:'Visa Cash App Racing Bulls',base:'Faenza, Italiya',engine:'Honda RBPT',drivers:[{num:30,name:'Liam Lawson',nat:'🇳🇿 Yangi Zelandiya',badge:''},{num:41,name:'Arvid Lindblad',nat:'🇬🇧 Britaniya',badge:'rookie',badgeText:'Rookie'}]},
+  {id:'racingbulls',color:'#6692FF',name:'Visa Cash App Racing Bulls',base:'Faenza, Italiya',engine:'Honda RBPT',drivers:[{num:30,name:'Liam Lawson',nat:'🇳🇿 Yangi Zelandiya',badge:''},{num:41,name:'Arvid Lindblad',nat:'🇬🇧 Britaniya',badge:'br',bt:'Rookie'}]},
   {id:'audi',color:'#B5B5B5',name:'Audi Revolut F1',base:'Hinwil, Shveytsariya',engine:'Ferrari',drivers:[{num:27,name:'Nico Hülkenberg',nat:'🇩🇪 Germaniya',badge:''},{num:5,name:'Gabriel Bortoleto',nat:'🇧🇷 Braziliya',badge:''}]},
-  {id:'cadillac',color:'#C8B900',name:'Cadillac F1 Team',base:'Indianapolis, AQSh',engine:'Ferrari',drivers:[{num:11,name:'Sergio Pérez',nat:'🇲🇽 Meksika',badge:''},{num:77,name:'Valtteri Bottas',nat:'🇫🇮 Finlandiya',badge:'veteran',badgeText:'Veteran'}]},
+  {id:'cadillac',color:'#C8B900',name:'Cadillac F1 Team',base:'Indianapolis, AQSh',engine:'Ferrari',drivers:[{num:11,name:'Sergio Pérez',nat:'🇲🇽 Meksika',badge:''},{num:77,name:'Valtteri Bottas',nat:'🇫🇮 Finlandiya',badge:'bv',bt:'Veteran'}]},
 ];
 
-const driversStandings=[
-  {pos:1,name:'Kimi Antonelli',team:'Mercedes',teamId:'mercedes',pts:100},
-  {pos:2,name:'George Russell',team:'Mercedes',teamId:'mercedes',pts:80},
-  {pos:3,name:'Charles Leclerc',team:'Ferrari',teamId:'ferrari',pts:59},
-  {pos:4,name:'Lando Norris',team:'McLaren',teamId:'mclaren',pts:51},
-  {pos:5,name:'Lewis Hamilton',team:'Ferrari',teamId:'ferrari',pts:51},
-  {pos:6,name:'Oscar Piastri',team:'McLaren',teamId:'mclaren',pts:42},
-  {pos:7,name:'Max Verstappen',team:'Red Bull',teamId:'redbull',pts:30},
-  {pos:8,name:'Pierre Gasly',team:'Alpine',teamId:'alpine',pts:23},
-  {pos:9,name:'Carlos Sainz',team:'Williams',teamId:'williams',pts:18},
-  {pos:10,name:'Franco Colapinto',team:'Alpine',teamId:'alpine',pts:15},
-];
+function gc(n){const m={'McLaren':'#FF8000','Ferrari':'#E8002D','Mercedes':'#27F4D2','Red Bull':'#3671C6','Williams':'#64C4FF','Aston Martin':'#229971','Alpine':'#0093CC','Haas':'#B6BABD','RB':'#6692FF','Sauber':'#B5B5B5','Cadillac':'#C8B900'};if(!n)return'#888';for(const k of Object.keys(m))if(n.includes(k))return m[k];return'#888';}
 
-const constructorsStandings=[
-  {pos:1,name:'Mercedes',teamId:'mercedes',pts:180},
-  {pos:2,name:'Ferrari',teamId:'ferrari',pts:110},
-  {pos:3,name:'McLaren',teamId:'mclaren',pts:94},
-  {pos:4,name:'Red Bull',teamId:'redbull',pts:30},
-  {pos:5,name:'Alpine',teamId:'alpine',pts:23},
-  {pos:6,name:'Williams',teamId:'williams',pts:18},
-  {pos:7,name:'Aston Martin',teamId:'aston',pts:5},
-  {pos:8,name:'Haas',teamId:'haas',pts:2},
-  {pos:9,name:'Racing Bulls',teamId:'racingbulls',pts:1},
-  {pos:10,name:'Audi',teamId:'audi',pts:0},
-  {pos:11,name:'Cadillac',teamId:'cadillac',pts:0},
-];
+let ctab='teams',cfil='all',drS=[],coS=[],sch=[],rR={};
 
-let currentTab='teams';
-let currentFilter='all';
-
-function getTeamColor(id){const t=teams.find(x=>x.id===id);return t?t.color:'#888';}
-
-function filterTeam(id,el){
-  currentFilter=id;
-  document.querySelectorAll('.f-item').forEach(x=>x.classList.remove('active'));
-  el.classList.add('active');
+async function init(){
+  try{
+    const [d,c,s]=await Promise.all([
+      fetch('https://ergast.com/api/f1/2024/driverStandings.json'),
+      fetch('https://ergast.com/api/f1/2024/constructorStandings.json'),
+      fetch('https://ergast.com/api/f1/2024.json')
+    ]);
+    const [dd,cd,sd]=await Promise.all([d.json(),c.json(),s.json()]);
+    drS=dd.MRData.StandingsTable.StandingsLists[0]?.DriverStandings||[];
+    coS=cd.MRData.StandingsTable.StandingsLists[0]?.ConstructorStandings||[];
+    const races=sd.MRData.RaceTable.Races||[];
+    document.getElementById('rc').textContent=races.length||24;
+    const wr=await fetch('https://ergast.com/api/f1/2024/results/1.json?limit=30');
+    const wd=await wr.json();
+    (wd.MRData.RaceTable.Races||[]).forEach(r=>{rR[r.round]=r.Results?.[0];});
+    const now=new Date();let nf=false;
+    sch=races.map(r=>{const dt=new Date(r.date+'T'+(r.time||'12:00:00Z'));const done=dt<now;const isNext=!done&&!nf;if(isNext)nf=true;return{...r,done,isNext};});
+    document.getElementById('rd').textContent=sch.filter(r=>r.done).length;
+  }catch(e){drS=dD();coS=cD();}
   render();
 }
 
-function switchTab(tab,el){
-  currentTab=tab;
-  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
-  el.classList.add('active');
-  render();
-}
+function dD(){return[
+  {position:'1',Driver:{familyName:'Antonelli',givenName:'Kimi'},Constructors:[{name:'Mercedes'}],points:'100'},
+  {position:'2',Driver:{familyName:'Russell',givenName:'George'},Constructors:[{name:'Mercedes'}],points:'80'},
+  {position:'3',Driver:{familyName:'Leclerc',givenName:'Charles'},Constructors:[{name:'Ferrari'}],points:'59'},
+  {position:'4',Driver:{familyName:'Norris',givenName:'Lando'},Constructors:[{name:'McLaren'}],points:'51'},
+  {position:'5',Driver:{familyName:'Hamilton',givenName:'Lewis'},Constructors:[{name:'Ferrari'}],points:'51'},
+  {position:'6',Driver:{familyName:'Piastri',givenName:'Oscar'},Constructors:[{name:'McLaren'}],points:'42'},
+  {position:'7',Driver:{familyName:'Verstappen',givenName:'Max'},Constructors:[{name:'Red Bull'}],points:'30'},
+  {position:'8',Driver:{familyName:'Gasly',givenName:'Pierre'},Constructors:[{name:'Alpine'}],points:'23'},
+  {position:'9',Driver:{familyName:'Sainz',givenName:'Carlos'},Constructors:[{name:'Williams'}],points:'18'},
+  {position:'10',Driver:{familyName:'Colapinto',givenName:'Franco'},Constructors:[{name:'Alpine'}],points:'15'},
+];}
+function cD(){return[
+  {position:'1',Constructor:{name:'Mercedes'},points:'180'},
+  {position:'2',Constructor:{name:'Ferrari'},points:'110'},
+  {position:'3',Constructor:{name:'McLaren'},points:'94'},
+  {position:'4',Constructor:{name:'Red Bull'},points:'30'},
+  {position:'5',Constructor:{name:'Alpine'},points:'23'},
+  {position:'6',Constructor:{name:'Williams'},points:'18'},
+  {position:'7',Constructor:{name:'Aston Martin'},points:'5'},
+  {position:'8',Constructor:{name:'Haas'},points:'2'},
+  {position:'9',Constructor:{name:'RB F1 Team'},points:'1'},
+  {position:'10',Constructor:{name:'Sauber'},points:'0'},
+  {position:'11',Constructor:{name:'Cadillac'},points:'0'},
+];}
+
+function ft(id,el){cfil=id;document.querySelectorAll('.f-item').forEach(x=>x.classList.remove('active'));el.classList.add('active');render();}
+function sw(tab,el){ctab=tab;document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));el.classList.add('active');render();}
 
 function render(){
-  const area=document.getElementById('content-area');
-  if(currentTab==='teams') renderTeams(area);
-  else if(currentTab==='drivers') renderDrivers(area);
-  else if(currentTab==='standings') renderStandings(area);
-  else renderInfo(area);
+  const a=document.getElementById('ca');
+  if(ctab==='teams')rTeams(a);
+  else if(ctab==='drivers')rDrivers(a);
+  else if(ctab==='standings')rStandings(a);
+  else rSchedule(a);
 }
 
-function renderTeams(area){
-  const list=currentFilter==='all'?teams:teams.filter(t=>t.id===currentFilter);
-  area.innerHTML=`<div class="teams-grid">${list.map(t=>`
+function rTeams(a){
+  const list=cfil==='all'?TEAMS:TEAMS.filter(t=>t.id===cfil);
+  a.innerHTML=`<div class="teams-grid">${list.map(t=>`
   <div class="team-card" style="--tc:${t.color}">
-    <div class="team-header">
-      <div class="team-name">${t.name}</div>
-      <div class="team-base">📍 ${t.base}</div>
-      <span class="team-engine-badge">⚙️ ${t.engine}</span>
+    <div class="team-hdr">
+      <div class="team-nm">${t.name}</div>
+      <div class="team-bs">📍 ${t.base}</div>
+      <span class="team-eng">⚙️ ${t.engine}</span>
     </div>
-    <div class="team-drivers">
+    <div class="team-drvs">
       ${t.drivers.map(d=>`
-      <div class="driver-chip">
-        <div class="driver-num">${d.num}</div>
-        <div class="driver-name">${d.name}</div>
-        <div class="driver-nat">${d.nat}</div>
-        ${d.badge?`<span class="driver-badge badge-${d.badge}">${d.badgeText}</span>`:''}
+      <div class="drv-chip">
+        <div class="drv-av">${avatar(d.num,t.color,54)}</div>
+        <div class="drv-inf">
+          <div class="drv-num">${d.num}</div>
+          <div class="drv-nm">${d.name}</div>
+          <div class="drv-nat">${d.nat}</div>
+          ${d.badge?`<span class="dbadge ${d.badge}">${d.bt}</span>`:''}
+        </div>
       </div>`).join('')}
     </div>
   </div>`).join('')}</div>`;
 }
 
-function renderDrivers(area){
+function rDrivers(a){
   const all=[];
-  const list=currentFilter==='all'?teams:teams.filter(t=>t.id===currentFilter);
-  list.forEach(t=>t.drivers.forEach(d=>all.push({...d,teamName:t.name,teamId:t.id,color:t.color})));
-  area.innerHTML=`<div class="section-title">2026 Barcha haydovchilar (${all.length} ta)</div>
-  <div class="drivers-list">${all.map(d=>`
-  <div class="driver-card">
-    <div class="drv-num-circle" style="background:${d.color}">${d.num}</div>
-    <div class="drv-info">
-      <div class="drv-full">${d.name}</div>
-      <div class="drv-team" style="color:${d.color}">${d.teamName}</div>
-      <div class="drv-nat">${d.nat}</div>
-      ${d.badge?`<span class="driver-badge badge-${d.badge}">${d.badgeText}</span>`:''}
+  const list=cfil==='all'?TEAMS:TEAMS.filter(t=>t.id===cfil);
+  list.forEach(t=>t.drivers.forEach(d=>all.push({...d,teamName:t.name,color:t.color})));
+  a.innerHTML=`<div class="sec-title">2026 Barcha haydovchilar</div>
+  <div class="drvs-grid">${all.map(d=>`
+  <div class="drv-card" style="--tc:${d.color};--tc-bg:${d.color}11">
+    <div class="drv-card-top">
+      <div class="drv-card-av">${avatar(d.num,d.color,70)}</div>
+    </div>
+    <div class="drv-card-body">
+      <div class="drv-card-name">${d.name}</div>
+      <div class="drv-card-team" style="color:${d.color}">${d.teamName}</div>
+      <div class="drv-card-nat">${d.nat}</div>
+      ${d.badge?`<span class="dbadge ${d.badge}">${d.bt}</span>`:''}
     </div>
   </div>`).join('')}</div>`;
 }
 
-function renderStandings(area){
-  area.innerHTML=`<div class="std-section">
+function rStandings(a){
+  const drv=drS.length?drS:dD();
+  const con=coS.length?coS:cD();
+  a.innerHTML=`<div class="std-grid">
   <div>
-    <div class="section-title">Haydovchilar chempionati</div>
-    <div class="std-card">
-      <div class="std-head"><div class="std-head-title">Haydovchilar reytingi</div></div>
-      ${driversStandings.map(d=>`
+    <div class="sec-title">Haydovchilar chempionati</div>
+    <div class="std-box">
+      <div class="std-hd"><div class="std-hd-t">Haydovchilar reytingi</div></div>
+      ${drv.slice(0,15).map(d=>`
       <div class="std-row">
-        <div class="std-pos ${d.pos<=3?'top3':''}">${d.pos}</div>
-        <div class="std-dot" style="background:${getTeamColor(d.teamId)}"></div>
-        <div class="std-name">${d.name}<br><span style="font-size:11px;color:#555">${d.team}</span></div>
-        <div style="text-align:right"><div class="std-pts">${d.pts}</div><div class="std-pts-sub">ball</div></div>
+        <div class="std-pos ${+d.position<=3?'t':''}">${d.position}</div>
+        <div class="std-dot" style="background:${gc(d.Constructors?.[0]?.name)}"></div>
+        <div class="std-nm">${d.Driver.givenName} ${d.Driver.familyName}<br><span class="std-sub">${d.Constructors?.[0]?.name||''}</span></div>
+        <div><div class="std-pts">${d.points}</div><div class="std-pts-lbl">ball</div></div>
       </div>`).join('')}
     </div>
   </div>
   <div>
-    <div class="section-title">Konstruktorlar chempionati</div>
-    <div class="std-card">
-      <div class="std-head"><div class="std-head-title">Jamoalar reytingi</div></div>
-      ${constructorsStandings.map(c=>`
+    <div class="sec-title">Konstruktorlar chempionati</div>
+    <div class="std-box">
+      <div class="std-hd"><div class="std-hd-t">Jamoalar reytingi</div></div>
+      ${con.map(c=>`
       <div class="std-row">
-        <div class="std-pos ${c.pos<=3?'top3':''}">${c.pos}</div>
-        <div class="std-dot" style="background:${getTeamColor(c.teamId)}"></div>
-        <div class="std-name">${c.name}</div>
-        <div style="text-align:right"><div class="std-pts">${c.pts}</div><div class="std-pts-sub">ball</div></div>
+        <div class="std-pos ${+c.position<=3?'t':''}">${c.position}</div>
+        <div class="std-dot" style="background:${gc(c.Constructor?.name)}"></div>
+        <div class="std-nm">${c.Constructor?.name||''}</div>
+        <div><div class="std-pts">${c.points}</div><div class="std-pts-lbl">ball</div></div>
       </div>`).join('')}
     </div>
   </div>
   </div>`;
 }
 
-function renderInfo(area){
-  area.innerHTML=`
-  <div class="info-box">
-    <h3>2026 — Yangi era</h3>
-    <p>2026 yilgi Formula 1 sezoni sport tarixidagi eng katta texnik o'zgarishlar bilan boshlanadi. Yangi aerodynamika qoidalari, kichikroq mashinalar va yangi elektr dvigatel qoidalari kiritildi.</p>
-  </div>
-  <div class="info-box">
-    <h3>Yangi jamoalar</h3>
-    <ul>
-      <li><span>Cadillac F1</span> — Amerika jamoasi. 2016 yildan beri birinchi yangi jamoa. Haydovchilar: Sergio Pérez va Valtteri Bottas. Ferrari dvigateli bilan ishlaydi.</li>
-      <li><span>Audi F1</span> — Sobiq Sauber jamoasi Audi nomi bilan qayta brending qilindi. Haydovchilar: Nico Hülkenberg va Gabriel Bortoleto.</li>
-    </ul>
-  </div>
-  <div class="info-box">
-    <h3>Asosiy yangiliklar</h3>
-    <ul>
-      <li><span>Lewis Hamilton</span> — Ferrari rangini kiydi (sobiq Mercedes haydovchisi)</li>
-      <li><span>Lando Norris</span> — 2025 yilgi jahon chempioni</li>
-      <li><span>Arvid Lindblad</span> — 2026 yildagi yagona rookie haydovchi</li>
-      <li><span>Max Verstappen</span> — Red Bull bilan 2028 yilgacha shartnoma imzoladi</li>
-      <li><span>Kimi Antonelli</span> — 2026 mavsum boshida jadval yetakchisi (100 ball)</li>
-    </ul>
-  </div>
-  <div class="info-box">
-    <h3>2026 Mavsum holati (19 may holatiga)</h3>
-    <ul>
-      <li>Konstruktorlar: <span>Mercedes — 180 ball (1-o'rin)</span></li>
-      <li>Haydovchilar: <span>Kimi Antonelli — 100 ball (1-o'rin)</span></li>
-      <li>Navbatdagi poyga: <span>Kanada GP — Monreal</span></li>
-    </ul>
-  </div>`;
+function rSchedule(a){
+  if(!sch.length){a.innerHTML=`<div class="loading"><div class="spin"></div>Yuklanmoqda...</div>`;return;}
+  const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  a.innerHTML=`<div class="sec-title">2026 Poyga Kalendari</div>
+  <div class="sch-list">${sch.map(r=>{
+    const dt=new Date(r.date);
+    const ds=`${dt.getDate()} ${mo[dt.getMonth()]}`;
+    const w=rR[r.round];
+    return`<div class="r-card ${r.done?'done':''} ${r.isNext?'next':''}">
+      <div class="r-rnd">${r.round}</div>
+      <div class="r-inf">
+        <div class="r-nm">${r.raceName}${r.isNext?'<span class="nlbl">KEYINGI</span>':''}</div>
+        <div class="r-loc">📍 ${r.Circuit?.Location?.country||''}</div>
+        ${r.done&&w?`<div class="wlbl">🏆 <span>${w.Driver?.givenName} ${w.Driver?.familyName}</span></div>`:''}
+      </div>
+      <div class="r-dt">${ds}</div>
+    </div>`;
+  }).join('')}</div>`;
 }
 
-render();
+init();
 </script>
 </body>
 </html>
