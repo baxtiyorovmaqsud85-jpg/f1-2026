@@ -7,7 +7,6 @@
 <meta name="description" content="Formula 1 2026 yilgi barcha jamoalar va haydovchilar haqida to'liq ma'lumot o'zbek tilida. McLaren, Ferrari, Mercedes, Red Bull va boshqa jamoalar. Poyga natijalari va jadval.">
 <meta name="keywords" content="F1 2026, Formula 1 2026, F1 haydovchilar, F1 jamoalar, formula bir uzbek, F1 uzbekcha, Lando Norris, Max Verstappen, Lewis Hamilton, Charles Leclerc, F1 natijalar, F1 jadval, formula 1 ozbekiston">
 <meta name="robots" content="index, follow">
-<meta name="author" content="F1 2026 Uzbek">
 <meta property="og:title" content="F1 2026 - Formula 1 Ma'lumotlari O'zbek Tilida">
 <meta property="og:description" content="Formula 1 2026 yilgi barcha jamoalar va haydovchilar haqida to'liq ma'lumot">
 <meta property="og:type" content="website">
@@ -42,9 +41,6 @@ body{font-family:'Rajdhani',sans-serif;background:#0f0f0f;color:#f0f0f0;min-heig
 .tab:hover:not(.active){color:#aaa}
 .content{padding:24px 28px}
 .sec-title{font-family:'Exo 2',sans-serif;font-size:20px;font-weight:700;color:#fff;margin-bottom:16px}
-.loading{text-align:center;padding:60px;color:#444}
-.spin{width:36px;height:36px;border:3px solid #222;border-top-color:#e10600;border-radius:50%;animation:rot 0.8s linear infinite;margin:0 auto 14px}
-@keyframes rot{to{transform:rotate(360deg)}}
 .teams-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
 .team-card{background:#181818;border:1px solid #222;border-radius:14px;overflow:hidden;transition:all 0.15s}
 .team-card:hover{border-color:#3a3a3a;transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.5)}
@@ -91,6 +87,7 @@ body{font-family:'Rajdhani',sans-serif;background:#0f0f0f;color:#f0f0f0;min-heig
 .r-card:hover{border-color:#333}
 .r-card.next{border-color:#e10600;border-width:1.5px;background:#1a0800}
 .r-card.done .r-nm{color:#444}
+.r-card.done .r-rnd{color:#2a2a2a}
 .r-rnd{font-family:'Exo 2',sans-serif;font-size:20px;font-weight:900;color:#2a2a2a;width:32px;flex-shrink:0}
 .r-card.next .r-rnd{color:#e10600}
 .r-inf{flex:1}
@@ -113,12 +110,12 @@ body{font-family:'Rajdhani',sans-serif;background:#0f0f0f;color:#f0f0f0;min-heig
 <div class="hero">
   <div class="hero-title">Formula 1 · 2026</div>
   <div class="hero-sub">O'zbek tilida — 11 jamoa — 22 haydovchi</div>
-  <div class="live-badge"><div class="live-dot"></div> Avtomatik yangilanadi</div>
+  <div class="live-badge"><div class="live-dot"></div> Muntazam yangilanadi</div>
   <div class="hero-stats">
     <div class="hstat"><div class="hstat-num">11</div><div class="hstat-lbl">Jamoa</div></div>
     <div class="hstat"><div class="hstat-num">22</div><div class="hstat-lbl">Haydovchi</div></div>
-    <div class="hstat"><div class="hstat-num" id="rc">24</div><div class="hstat-lbl">Poyga</div></div>
-    <div class="hstat"><div class="hstat-num" id="rd">–</div><div class="hstat-lbl">O'tkazildi</div></div>
+    <div class="hstat"><div class="hstat-num">24</div><div class="hstat-lbl">Poyga</div></div>
+    <div class="hstat"><div class="hstat-num">6</div><div class="hstat-lbl">O'tkazildi</div></div>
   </div>
 </div>
 
@@ -145,9 +142,7 @@ body{font-family:'Rajdhani',sans-serif;background:#0f0f0f;color:#f0f0f0;min-heig
   <div class="tab" onclick="sw('about',this)">ℹ️ Haqida</div>
 </div>
 
-<div class="content" id="ca">
-  <div class="loading"><div class="spin"></div>Ma'lumotlar yuklanmoqda...</div>
-</div>
+<div class="content" id="ca"></div>
 </div>
 
 <script>
@@ -157,14 +152,12 @@ function avatar(num,color,size=54){
   const init=INIT[num]||'??';
   const r=size/2;
   return`<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <radialGradient id="rg${num}s${size}" cx="40%" cy="35%" r="65%">
-        <stop offset="0%" stop-color="${color}" stop-opacity="0.35"/>
-        <stop offset="100%" stop-color="${color}" stop-opacity="0.05"/>
-      </radialGradient>
-    </defs>
+    <defs><radialGradient id="g${num}${size}" cx="40%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="${color}" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="${color}" stop-opacity="0.05"/>
+    </radialGradient></defs>
     <circle cx="${r}" cy="${r}" r="${r}" fill="#1a1a1a"/>
-    <circle cx="${r}" cy="${r}" r="${r}" fill="url(#rg${num}s${size})"/>
+    <circle cx="${r}" cy="${r}" r="${r}" fill="url(#g${num}${size})"/>
     <ellipse cx="${r}" cy="${r*1.1}" rx="${r*0.62}" ry="${r*0.58}" fill="${color}" opacity="0.18"/>
     <ellipse cx="${r}" cy="${r*0.85}" rx="${r*0.52}" ry="${r*0.38}" fill="${color}" opacity="0.28"/>
     <ellipse cx="${r}" cy="${r*0.9}" rx="${r*0.38}" ry="${r*0.18}" fill="${color}" opacity="0.7"/>
@@ -175,84 +168,77 @@ function avatar(num,color,size=54){
 }
 
 const TEAMS=[
-  {id:'mclaren',color:'#FF8000',name:'McLaren Mastercard',base:'Woking, Buyuk Britaniya',engine:'Mercedes',drivers:[{num:4,name:'Lando Norris',nat:'🇬🇧 Britaniyalik',badge:'bc',bt:'2025 Jahon Chempioni'},{num:81,name:'Oscar Piastri',nat:'🇦🇺 Avstraliyalik',badge:''}]},
-  {id:'ferrari',color:'#E8002D',name:'Scuderia Ferrari HP',base:'Maranello, Italiya',engine:'Ferrari',drivers:[{num:16,name:'Charles Leclerc',nat:'🇲🇨 Monakolik',badge:''},{num:44,name:'Lewis Hamilton',nat:'🇬🇧 Britaniyalik',badge:'bv',bt:'7× Jahon Chempioni'}]},
-  {id:'mercedes',color:'#27F4D2',name:'Mercedes-AMG Petronas',base:'Brackley, Buyuk Britaniya',engine:'Mercedes',drivers:[{num:63,name:'George Russell',nat:'🇬🇧 Britaniyalik',badge:''},{num:12,name:'Kimi Antonelli',nat:'🇮🇹 Italiyalik',badge:''}]},
-  {id:'redbull',color:'#3671C6',name:'Oracle Red Bull Racing',base:'Milton Keynes, Buyuk Britaniya',engine:'Honda RBPT',drivers:[{num:1,name:'Max Verstappen',nat:'🇳🇱 Niderlandiyalik',badge:'bv',bt:'4× Jahon Chempioni'},{num:6,name:'Isack Hadjar',nat:'🇫🇷 Fransiyalik',badge:'br',bt:'Yangi haydovchi'}]},
-  {id:'williams',color:'#64C4FF',name:'Atlassian Williams F1',base:'Grove, Buyuk Britaniya',engine:'Mercedes',drivers:[{num:23,name:'Alexander Albon',nat:'🇹🇭 Tailandlik',badge:''},{num:55,name:'Carlos Sainz Jr.',nat:'🇪🇸 Ispaniyalik',badge:''}]},
-  {id:'aston',color:'#229971',name:'Aston Martin Aramco',base:'Silverstone, Buyuk Britaniya',engine:'Mercedes',drivers:[{num:14,name:'Fernando Alonso',nat:'🇪🇸 Ispaniyalik',badge:'bv',bt:'2× Jahon Chempioni'},{num:18,name:'Lance Stroll',nat:'🇨🇦 Kanadalik',badge:''}]},
-  {id:'alpine',color:'#0093CC',name:'BWT Alpine F1',base:'Enstone, Buyuk Britaniya',engine:'Renault',drivers:[{num:10,name:'Pierre Gasly',nat:'🇫🇷 Fransiyalik',badge:''},{num:43,name:'Franco Colapinto',nat:'🇦🇷 Argentinaik',badge:''}]},
-  {id:'haas',color:'#B6BABD',name:'TGR Haas F1',base:'Kannapolis, AQSh',engine:'Ferrari',drivers:[{num:87,name:'Oliver Bearman',nat:'🇬🇧 Britaniyalik',badge:''},{num:31,name:'Esteban Ocon',nat:'🇫🇷 Fransiyalik',badge:''}]},
-  {id:'racingbulls',color:'#6692FF',name:'Visa Cash App Racing Bulls',base:'Faenza, Italiya',engine:'Honda RBPT',drivers:[{num:30,name:'Liam Lawson',nat:'🇳🇿 Yangi Zelandiyalik',badge:''},{num:41,name:'Arvid Lindblad',nat:'🇬🇧 Britaniyalik',badge:'br',bt:'Yangi haydovchi'}]},
-  {id:'audi',color:'#B5B5B5',name:'Audi Revolut F1',base:'Hinwil, Shveytsariya',engine:'Ferrari',drivers:[{num:27,name:'Nico Hülkenberg',nat:'🇩🇪 Nemis',badge:''},{num:5,name:'Gabriel Bortoleto',nat:'🇧🇷 Braziliyalik',badge:''}]},
-  {id:'cadillac',color:'#C8B900',name:'Cadillac F1 Team',base:'Indianapolis, AQSh',engine:'Ferrari',drivers:[{num:11,name:'Sergio Pérez',nat:'🇲🇽 Meksikalik',badge:''},{num:77,name:'Valtteri Bottas',nat:'🇫🇮 Finlandiyalik',badge:'bv',bt:'Tajribali haydovchi'}]},
+  {id:'mclaren',color:'#FF8000',name:'McLaren Mastercard',base:'Woking, Buyuk Britaniya',engine:'Mercedes',info:"McLaren jamoasi 1963-yilda tashkil etilgan. 2026-yilda jahon chempioni Lando Norris va Oscar Piastri bilan qatnashmoqda.",drivers:[{num:4,name:'Lando Norris',nat:'🇬🇧 Britaniyalik',badge:'bc',bt:'2025 Jahon Chempioni'},{num:81,name:'Oscar Piastri',nat:'🇦🇺 Avstraliyalik',badge:''}]},
+  {id:'ferrari',color:'#E8002D',name:'Scuderia Ferrari HP',base:'Maranello, Italiya',engine:'Ferrari',info:"Ferrari F1ning eng qadimiy jamoasi. 1950-yildan beri poygalarda. 2026-yilda Hamilton va Leclerc bilan.",drivers:[{num:16,name:'Charles Leclerc',nat:'🇲🇨 Monakolik',badge:''},{num:44,name:'Lewis Hamilton',nat:'🇬🇧 Britaniyalik',badge:'bv',bt:'7× Jahon Chempioni'}]},
+  {id:'mercedes',color:'#27F4D2',name:'Mercedes-AMG Petronas',base:'Brackley, Buyuk Britaniya',engine:'Mercedes',info:"Mercedes 2010-yildan F1ga qaytdi va 8 marta ketma-ket chempion bo'ldi.",drivers:[{num:63,name:'George Russell',nat:'🇬🇧 Britaniyalik',badge:''},{num:12,name:'Kimi Antonelli',nat:'🇮🇹 Italiyalik',badge:''}]},
+  {id:'redbull',color:'#3671C6',name:'Oracle Red Bull Racing',base:'Milton Keynes, Buyuk Britaniya',engine:'Honda RBPT',info:"Red Bull 2005-yilda tashkil etilgan. Max Verstappen 4 marta jahon chempioni bo'lgan.",drivers:[{num:1,name:'Max Verstappen',nat:'🇳🇱 Niderlandiyalik',badge:'bv',bt:'4× Jahon Chempioni'},{num:6,name:'Isack Hadjar',nat:'🇫🇷 Fransiyalik',badge:'br',bt:'Yangi haydovchi'}]},
+  {id:'williams',color:'#64C4FF',name:'Atlassian Williams F1',base:'Grove, Buyuk Britaniya',engine:'Mercedes',info:"Williams 7 marta konstruktorlar chempioni bo'lgan britaniyalik jamoa.",drivers:[{num:23,name:'Alexander Albon',nat:'🇹🇭 Tailandlik',badge:''},{num:55,name:'Carlos Sainz Jr.',nat:'🇪🇸 Ispaniyalik',badge:''}]},
+  {id:'aston',color:'#229971',name:'Aston Martin Aramco',base:'Silverstone, Buyuk Britaniya',engine:'Mercedes',info:"Aston Martin 2021-yilda yangilangan. Fernando Alonso 2× jahon chempioni.",drivers:[{num:14,name:'Fernando Alonso',nat:'🇪🇸 Ispaniyalik',badge:'bv',bt:'2× Jahon Chempioni'},{num:18,name:'Lance Stroll',nat:'🇨🇦 Kanadalik',badge:''}]},
+  {id:'alpine',color:'#0093CC',name:'BWT Alpine F1',base:'Enstone, Buyuk Britaniya',engine:'Renault',info:"Alpine — fransiyalik Renault jamoasining yangi nomi. Pierre Gasly va Franco Colapinto bilan.",drivers:[{num:10,name:'Pierre Gasly',nat:'🇫🇷 Fransiyalik',badge:''},{num:43,name:'Franco Colapinto',nat:'🇦🇷 Argentinaik',badge:''}]},
+  {id:'haas',color:'#B6BABD',name:'TGR Haas F1',base:'Kannapolis, AQSh',engine:'Ferrari',info:"Haas 2016-yilda tashkil etilgan amerikalik jamoa. Oliver Bearman va Esteban Ocon bilan.",drivers:[{num:87,name:'Oliver Bearman',nat:'🇬🇧 Britaniyalik',badge:''},{num:31,name:'Esteban Ocon',nat:'🇫🇷 Fransiyalik',badge:''}]},
+  {id:'racingbulls',color:'#6692FF',name:'Visa Cash App Racing Bulls',base:'Faenza, Italiya',engine:'Honda RBPT',info:"Racing Bulls (sobiq AlphaTauri) — Red Bull guruhining ikkinchi jamoasi.",drivers:[{num:30,name:'Liam Lawson',nat:'🇳🇿 Yangi Zelandiyalik',badge:''},{num:41,name:'Arvid Lindblad',nat:'🇬🇧 Britaniyalik',badge:'br',bt:'Yangi haydovchi'}]},
+  {id:'audi',color:'#B5B5B5',name:'Audi Revolut F1',base:'Hinwil, Shveytsariya',engine:'Ferrari',info:"Audi F1 — sobiq Sauber jamoasi. 2026-yildan Audi nomi bilan yangi boshlanish.",drivers:[{num:27,name:'Nico Hülkenberg',nat:'🇩🇪 Nemis',badge:''},{num:5,name:'Gabriel Bortoleto',nat:'🇧🇷 Braziliyalik',badge:''}]},
+  {id:'cadillac',color:'#C8B900',name:'Cadillac F1 Team',base:'Indianapolis, AQSh',engine:'Ferrari',info:"Cadillac — 2026-yilda F1ga qo'shilgan birinchi yangi amerikalik jamoa!",drivers:[{num:11,name:'Sergio Pérez',nat:'🇲🇽 Meksikalik',badge:''},{num:77,name:'Valtteri Bottas',nat:'🇫🇮 Finlandiyalik',badge:'bv',bt:'Tajribali haydovchi'}]},
 ];
 
-const TEAM_UZ={
-  mclaren:'McLaren jamoasi 1963-yilda Yangi Zelandiyalik Bryus McLaren tomonidan tashkil etilgan. 2026-yilda jahon chempioni Lando Norris va Oscar Piastri bilan qatnashmoqda.',
-  ferrari:'Scuderia Ferrari Formula 1ning eng qadimiy va mashhur jamoasi. 1950-yildan beri poygalarda qatnashib kelmoqda. 2026-yilda Lewis Hamilton va Charles Leclerc bilan.',
-  mercedes:'Mercedes-AMG Petronas jamoasi 2010-yildan boshlab F1ga qaytdi va ketma-ket 8 marotaba konstruktorlar chempioni bo\'ldi.',
-  redbull:'Red Bull Racing 2005-yilda tashkil etilgan avstriyalik jamoa. Max Verstappen 4 marotaba jahon chempioni bo\'lgan.',
-  williams:'Williams Racing F1 tarixining eng muvaffaqiyatli jamoalaridan biri. 7 marta konstruktorlar chempioni bo\'lgan.',
-  aston:'Aston Martin Aramco 2021-yilda yangilangan britaniyalik jamoa. Fernando Alonso va Lance Stroll bilan qatnashmoqda.',
-  alpine:'BWT Alpine F1 — fransiyalik Renault jamoasining yangi nomi. Pierre Gasly va Franco Colapinto bilan.',
-  haas:'Haas F1 Team — 2016-yilda tashkil etilgan amerikalik jamoa. Oliver Bearman va Esteban Ocon bilan.',
-  racingbulls:'Racing Bulls (sobiq AlphaTauri) — Red Bull guruhining ikkinchi jamoasi. Yosh haydovchilarga imkon beradi.',
-  audi:'Audi F1 Team — sobiq Alfa Romeo/Sauber jamoasi. 2026-yildan Audi nomi bilan yangi boshlanish.',
-  cadillac:'Cadillac F1 Team — 2026-yilda F1ga qo\'shilgan birinchi amerikalik yangi jamoa! Sergio Pérez va Valtteri Bottas bilan.',
-};
+// 2026 F1 to'liq kalendar
+const SCHEDULE=[
+  {r:1,name:'Avstraliya Gran Pri',circuit:'Albert Park',country:'Avstraliya',date:'2026-03-08',done:true,winner:'Kimi Antonelli'},
+  {r:2,name:'Xitoy Gran Pri',circuit:'Shanghai',country:'Xitoy',date:'2026-03-22',done:true,winner:'George Russell'},
+  {r:3,name:'Yaponiya Gran Pri',circuit:'Suzuka',country:'Yaponiya',date:'2026-04-05',done:true,winner:'Kimi Antonelli'},
+  {r:4,name:'Birlashgan Arab Amirliklari Gran Pri',circuit:'Jeddah',country:'Saudiya Arabistoni',date:'2026-04-19',done:true,winner:'George Russell'},
+  {r:5,name:'Mayami Gran Pri',circuit:'Miami International Autodrome',country:'AQSh',date:'2026-05-04',done:true,winner:'Max Verstappen'},
+  {r:6,name:'Kanada Gran Pri',circuit:'Circuit Gilles Villeneuve',country:'Kanada',date:'2026-05-24',done:true,winner:'Kimi Antonelli'},
+  {r:7,name:'Ispaniya Gran Pri',circuit:'Circuit de Barcelona-Catalunya',country:'Ispaniya',date:'2026-06-07',done:false},
+  {r:8,name:'Monako Gran Pri',circuit:'Circuit de Monaco',country:'Monako',date:'2026-06-05',done:false,next:true},
+  {r:9,name:'Ozarbayjon Gran Pri',circuit:'Baku City Circuit',country:'Ozarbayjon',date:'2026-07-05',done:false},
+  {r:10,name:'Britaniya Gran Pri',circuit:'Silverstone',country:'Buyuk Britaniya',date:'2026-07-19',done:false},
+  {r:11,name:'Belgiya Gran Pri',circuit:'Circuit de Spa-Francorchamps',country:'Belgiya',date:'2026-08-02',done:false},
+  {r:12,name:'Vengriya Gran Pri',circuit:'Hungaroring',country:'Vengriya',date:'2026-08-02',done:false},
+  {r:13,name:'Niderlandiya Gran Pri',circuit:'Circuit Zandvoort',country:'Niderlandiya',date:'2026-08-30',done:false},
+  {r:14,name:'Italiya Gran Pri',circuit:'Monza',country:'Italiya',date:'2026-09-06',done:false},
+  {r:15,name:'Ozarbayjon Gran Pri 2',circuit:'Baku City Circuit',country:'Ozarbayjon',date:'2026-09-20',done:false},
+  {r:16,name:'Singapur Gran Pri',circuit:'Marina Bay Street Circuit',country:'Singapur',date:'2026-10-04',done:false},
+  {r:17,name:'AQSh Gran Pri',circuit:'Circuit of the Americas',country:'AQSh',date:'2026-10-18',done:false},
+  {r:18,name:'Meksika Gran Pri',circuit:'Autodromo Hermanos Rodriguez',country:'Meksika',date:'2026-11-01',done:false},
+  {r:19,name:'Braziliya Gran Pri',circuit:'Interlagos',country:'Braziliya',date:'2026-11-15',done:false},
+  {r:20,name:'Las-Vegas Gran Pri',circuit:'Las Vegas Strip Circuit',country:'AQSh',date:'2026-11-22',done:false},
+  {r:21,name:'Qatar Gran Pri',circuit:'Lusail International Circuit',country:'Qatar',date:'2026-11-29',done:false},
+  {r:22,name:'Abu-Dabi Gran Pri',circuit:'Yas Marina Circuit',country:'BAA',date:'2026-12-06',done:false},
+];
 
-function gc(n){const m={'McLaren':'#FF8000','Ferrari':'#E8002D','Mercedes':'#27F4D2','Red Bull':'#3671C6','Williams':'#64C4FF','Aston Martin':'#229971','Alpine':'#0093CC','Haas':'#B6BABD','RB':'#6692FF','Sauber':'#B5B5B5','Cadillac':'#C8B900'};if(!n)return'#888';for(const k of Object.keys(m))if(n.includes(k))return m[k];return'#888';}
+const STANDINGS_DRV=[
+  {p:1,name:'Kimi Antonelli',team:'Mercedes',color:'#27F4D2',pts:125},
+  {p:2,name:'George Russell',team:'Mercedes',color:'#27F4D2',pts:80},
+  {p:4,name:'Charles Leclerc',team:'Ferrari',color:'#E8002D',pts:59},
+  {p:4,name:'Lando Norris',team:'McLaren',color:'#FF8000',pts:51},
+  {p:3,name:'Lewis Hamilton',team:'Ferrari',color:'#E8002D',pts:69},
+  {p:6,name:'Oscar Piastri',team:'McLaren',color:'#FF8000',pts:42},
+  {p:5,name:'Max Verstappen',team:'Red Bull',color:'#3671C6',pts:45},
+  {p:8,name:'Pierre Gasly',team:'Alpine',color:'#0093CC',pts:23},
+  {p:9,name:'Carlos Sainz',team:'Williams',color:'#64C4FF',pts:18},
+  {p:10,name:'Franco Colapinto',team:'Alpine',color:'#0093CC',pts:15},
+  {p:11,name:'Alexander Albon',team:'Williams',color:'#64C4FF',pts:10},
+  {p:12,name:'Isack Hadjar',team:'Red Bull',color:'#3671C6',pts:8},
+  {p:13,name:'Gabriel Bortoleto',team:'Audi',color:'#B5B5B5',pts:6},
+  {p:14,name:'Oliver Bearman',team:'Haas',color:'#B6BABD',pts:4},
+  {p:15,name:'Arvid Lindblad',team:'Racing Bulls',color:'#6692FF',pts:2},
+];
+const STANDINGS_CON=[
+  {p:1,name:'Mercedes',color:'#27F4D2',pts:180},
+  {p:2,name:'Ferrari',color:'#E8002D',pts:110},
+  {p:3,name:'McLaren',color:'#FF8000',pts:94},
+  {p:4,name:'Red Bull',color:'#3671C6',pts:38},
+  {p:5,name:'Alpine',color:'#0093CC',pts:38},
+  {p:6,name:'Williams',color:'#64C4FF',pts:28},
+  {p:7,name:'Audi',color:'#B5B5B5',pts:6},
+  {p:8,name:'Haas',color:'#B6BABD',pts:4},
+  {p:9,name:'Racing Bulls',color:'#6692FF',pts:2},
+  {p:10,name:'Aston Martin',color:'#229971',pts:0},
+  {p:11,name:'Cadillac',color:'#C8B900',pts:0},
+];
 
-let ctab='teams',cfil='all',drS=[],coS=[],sch=[],rR={};
-
-async function init(){
-  try{
-    const [d,c,s]=await Promise.all([
-      fetch('https://ergast.com/api/f1/2024/driverStandings.json'),
-      fetch('https://ergast.com/api/f1/2024/constructorStandings.json'),
-      fetch('https://ergast.com/api/f1/2024.json')
-    ]);
-    const [dd,cd,sd]=await Promise.all([d.json(),c.json(),s.json()]);
-    drS=dd.MRData.StandingsTable.StandingsLists[0]?.DriverStandings||[];
-    coS=cd.MRData.StandingsTable.StandingsLists[0]?.ConstructorStandings||[];
-    const races=sd.MRData.RaceTable.Races||[];
-    document.getElementById('rc').textContent=races.length||24;
-    const wr=await fetch('https://ergast.com/api/f1/2024/results/1.json?limit=30');
-    const wd=await wr.json();
-    (wd.MRData.RaceTable.Races||[]).forEach(r=>{rR[r.round]=r.Results?.[0];});
-    const now=new Date();let nf=false;
-    sch=races.map(r=>{const dt=new Date(r.date+'T'+(r.time||'12:00:00Z'));const done=dt<now;const isNext=!done&&!nf;if(isNext)nf=true;return{...r,done,isNext};});
-    document.getElementById('rd').textContent=sch.filter(r=>r.done).length;
-  }catch(e){drS=dD();coS=cD();}
-  render();
-}
-
-function dD(){return[
-  {position:'1',Driver:{familyName:'Antonelli',givenName:'Kimi'},Constructors:[{name:'Mercedes'}],points:'100'},
-  {position:'2',Driver:{familyName:'Russell',givenName:'George'},Constructors:[{name:'Mercedes'}],points:'80'},
-  {position:'3',Driver:{familyName:'Leclerc',givenName:'Charles'},Constructors:[{name:'Ferrari'}],points:'59'},
-  {position:'4',Driver:{familyName:'Norris',givenName:'Lando'},Constructors:[{name:'McLaren'}],points:'51'},
-  {position:'5',Driver:{familyName:'Hamilton',givenName:'Lewis'},Constructors:[{name:'Ferrari'}],points:'51'},
-  {position:'6',Driver:{familyName:'Piastri',givenName:'Oscar'},Constructors:[{name:'McLaren'}],points:'42'},
-  {position:'7',Driver:{familyName:'Verstappen',givenName:'Max'},Constructors:[{name:'Red Bull'}],points:'30'},
-  {position:'8',Driver:{familyName:'Gasly',givenName:'Pierre'},Constructors:[{name:'Alpine'}],points:'23'},
-  {position:'9',Driver:{familyName:'Sainz',givenName:'Carlos'},Constructors:[{name:'Williams'}],points:'18'},
-  {position:'10',Driver:{familyName:'Colapinto',givenName:'Franco'},Constructors:[{name:'Alpine'}],points:'15'},
-];}
-function cD(){return[
-  {position:'1',Constructor:{name:'Mercedes'},points:'180'},
-  {position:'2',Constructor:{name:'Ferrari'},points:'110'},
-  {position:'3',Constructor:{name:'McLaren'},points:'94'},
-  {position:'4',Constructor:{name:'Red Bull'},points:'30'},
-  {position:'5',Constructor:{name:'Alpine'},points:'23'},
-  {position:'6',Constructor:{name:'Williams'},points:'18'},
-  {position:'7',Constructor:{name:'Aston Martin'},points:'5'},
-  {position:'8',Constructor:{name:'Haas'},points:'2'},
-  {position:'9',Constructor:{name:'RB F1 Team'},points:'1'},
-  {position:'10',Constructor:{name:'Sauber'},points:'0'},
-  {position:'11',Constructor:{name:'Cadillac'},points:'0'},
-];}
+let ctab='teams',cfil='all';
 
 function ft(id,el){cfil=id;document.querySelectorAll('.f-item').forEach(x=>x.classList.remove('active'));el.classList.add('active');render();}
 function sw(tab,el){ctab=tab;document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));el.classList.add('active');render();}
@@ -287,20 +273,17 @@ function rTeams(a){
         </div>
       </div>`).join('')}
     </div>
-    ${TEAM_UZ[t.id]?`<div style="padding:0 16px 14px;font-size:12px;color:#555;line-height:1.6">${TEAM_UZ[t.id]}</div>`:''}
+    <div style="padding:0 16px 14px;font-size:12px;color:#555;line-height:1.6">${t.info}</div>
   </div>`).join('')}</div>`;
 }
 
 function rDrivers(a){
   const all=[];
-  const list=cfil==='all'?TEAMS:TEAMS.filter(t=>t.id===cfil);
-  list.forEach(t=>t.drivers.forEach(d=>all.push({...d,teamName:t.name,color:t.color})));
+  (cfil==='all'?TEAMS:TEAMS.filter(t=>t.id===cfil)).forEach(t=>t.drivers.forEach(d=>all.push({...d,teamName:t.name,color:t.color})));
   a.innerHTML=`<div class="sec-title">2026 Barcha haydovchilar (${all.length} nafar)</div>
   <div class="drvs-grid">${all.map(d=>`
   <div class="drv-card" style="--tc:${d.color}">
-    <div class="drv-card-top" style="background:${d.color}11">
-      ${avatar(d.num,d.color,70)}
-    </div>
+    <div class="drv-card-top" style="background:${d.color}11">${avatar(d.num,d.color,70)}</div>
     <div class="drv-card-body">
       <div class="drv-card-name">${d.name}</div>
       <div class="drv-card-team" style="color:${d.color}">${d.teamName}</div>
@@ -311,19 +294,17 @@ function rDrivers(a){
 }
 
 function rStandings(a){
-  const drv=drS.length?drS:dD();
-  const con=coS.length?coS:cD();
   a.innerHTML=`<div class="std-grid">
   <div>
     <div class="sec-title">Haydovchilar chempionati 2026</div>
     <div class="std-box">
       <div class="std-hd"><div class="std-hd-t">Haydovchilar reytingi</div></div>
-      ${drv.slice(0,15).map(d=>`
+      ${STANDINGS_DRV.map(d=>`
       <div class="std-row">
-        <div class="std-pos ${+d.position<=3?'t':''}">${d.position}</div>
-        <div class="std-dot" style="background:${gc(d.Constructors?.[0]?.name)}"></div>
-        <div class="std-nm">${d.Driver.givenName} ${d.Driver.familyName}<br><span class="std-sub">${d.Constructors?.[0]?.name||''}</span></div>
-        <div><div class="std-pts">${d.points}</div><div class="std-pts-lbl">ball</div></div>
+        <div class="std-pos ${d.p<=3?'t':''}">${d.p}</div>
+        <div class="std-dot" style="background:${d.color}"></div>
+        <div class="std-nm">${d.name}<br><span class="std-sub">${d.team}</span></div>
+        <div><div class="std-pts">${d.pts}</div><div class="std-pts-lbl">ball</div></div>
       </div>`).join('')}
     </div>
   </div>
@@ -331,32 +312,29 @@ function rStandings(a){
     <div class="sec-title">Konstruktorlar chempionati 2026</div>
     <div class="std-box">
       <div class="std-hd"><div class="std-hd-t">Jamoalar reytingi</div></div>
-      ${con.map(c=>`
+      ${STANDINGS_CON.map(c=>`
       <div class="std-row">
-        <div class="std-pos ${+c.position<=3?'t':''}">${c.position}</div>
-        <div class="std-dot" style="background:${gc(c.Constructor?.name)}"></div>
-        <div class="std-nm">${c.Constructor?.name||''}</div>
-        <div><div class="std-pts">${c.points}</div><div class="std-pts-lbl">ball</div></div>
+        <div class="std-pos ${c.p<=3?'t':''}">${c.p}</div>
+        <div class="std-dot" style="background:${c.color}"></div>
+        <div class="std-nm">${c.name}</div>
+        <div><div class="std-pts">${c.pts}</div><div class="std-pts-lbl">ball</div></div>
       </div>`).join('')}
     </div>
-  </div>
-  </div>`;
+  </div></div>`;
 }
 
 function rSchedule(a){
-  if(!sch.length){a.innerHTML=`<div class="loading"><div class="spin"></div>Yuklanmoqda...</div>`;return;}
   const mo=['Yanvar','Fevral','Mart','Aprel','May','Iyun','Iyul','Avgust','Sentabr','Oktabr','Noyabr','Dekabr'];
   a.innerHTML=`<div class="sec-title">2026 Formula 1 Poyga Kalendari</div>
-  <div class="sch-list">${sch.map(r=>{
+  <div class="sch-list">${SCHEDULE.map(r=>{
     const dt=new Date(r.date);
     const ds=`${dt.getDate()} ${mo[dt.getMonth()]}`;
-    const w=rR[r.round];
-    return`<div class="r-card ${r.done?'done':''} ${r.isNext?'next':''}">
-      <div class="r-rnd">${r.round}</div>
+    return`<div class="r-card ${r.done?'done':''} ${r.next?'next':''}">
+      <div class="r-rnd">${r.r}</div>
       <div class="r-inf">
-        <div class="r-nm">${r.raceName}${r.isNext?`<span class="nlbl">KEYINGI POYGA</span>`:''}</div>
-        <div class="r-loc">📍 ${r.Circuit?.circuitName||''}, ${r.Circuit?.Location?.country||''}</div>
-        ${r.done&&w?`<div class="wlbl">🏆 G'olib: <span>${w.Driver?.givenName} ${w.Driver?.familyName}</span></div>`:''}
+        <div class="r-nm">${r.name}${r.next?`<span class="nlbl">KEYINGI POYGA</span>`:''}</div>
+        <div class="r-loc">📍 ${r.circuit}, ${r.country}</div>
+        ${r.done&&r.winner?`<div class="wlbl">🏆 G'olib: <span>${r.winner}</span></div>`:''}
       </div>
       <div class="r-dt">${ds}</div>
     </div>`;
@@ -367,34 +345,34 @@ function rAbout(a){
   a.innerHTML=`
   <div class="info-section">
     <h2>Bu sayt haqida</h2>
-    <p>Bu sayt Formula 1ning 2026-yilgi mavsumi haqida <strong>o'zbek tilida</strong> to'liq ma'lumot beruvchi birinchi maxsus sayt. Sayt har ochilganda avtomatik yangilanib turadi.</p>
+    <p>Bu sayt Formula 1ning 2026-yilgi mavsumi haqida <strong>o'zbek tilida</strong> to'liq ma'lumot beruvchi birinchi maxsus sayt.</p>
   </div>
   <div class="info-section">
     <h2>Formula 1 nima?</h2>
-    <p>Formula 1 (F1) — dunyodagi eng tezkor va eng qimmat avtomobil sport musobaqasi. Har yili 20-24 ta Gran Pri poygasi o'tkaziladi. Haydovchilar va jamoalar jahon chempionligi uchun kurashadi. Mashinalar soatiga 350 km/h tezlikka yetishi mumkin!</p>
+    <p>Formula 1 (F1) — dunyodagi eng tezkor va eng qimmat avtomobil sport musobaqasi. Har yili 20-24 ta Gran Pri poygasi o'tkaziladi. Mashinalar soatiga 350 km/h tezlikka yetishi mumkin!</p>
   </div>
   <div class="info-section">
     <h2>2026-yilgi asosiy yangiliklar</h2>
     <ul>
-      <li><span>11 ta jamoa</span> — 2026-yilda Cadillac (AQSh) va Audi yangi jamoa sifatida qo'shildi</li>
+      <li><span>11 ta jamoa</span> — Cadillac va Audi yangi jamoa sifatida qo'shildi</li>
       <li><span>Lewis Hamilton</span> — 7 marta jahon chempioni Ferrari jamoasiga o'tdi</li>
       <li><span>Lando Norris</span> — 2025-yilda birinchi marta jahon chempioni bo'ldi</li>
-      <li><span>Yangi qoidalar</span> — 2026-yildan yangi aerodynamika va dvigatel qoidalari joriy etildi</li>
+      <li><span>Yangi qoidalar</span> — 2026-yildan yangi aerodynamika va dvigatel qoidalari</li>
       <li><span>22 haydovchi</span> — 2016-yildan beri eng ko'p haydovchi soni</li>
     </ul>
   </div>
   <div class="info-section">
     <h2>Tez-tez so'raladigan savollar</h2>
     <ul>
-      <li><span>2026-yilgi jahon chempioni kim?</span> — Mavsum hali davom etmoqda</li>
-      <li><span>Qancha poyga bor?</span> — 2026-yilda 24 ta Gran Pri rejalashtirilgan</li>
-      <li><span>Eng tez jamoa qaysi?</span> — Mercedes 2026 mavsum boshida yetakchi</li>
+      <li><span>2026 jadval yetakchisi kim?</span> — Kimi Antonelli (Mercedes) 100 ball bilan</li>
+      <li><span>Qancha poyga bor?</span> — 2026-yilda 22 ta Gran Pri rejalashtirilgan</li>
+      <li><span>Keyingi poyga qachon?</span> — Kanada Gran Pri, 24 May 2026</li>
       <li><span>O'zbekistonda F1 ko'rish mumkinmi?</span> — Ha, F1 TV orqali online tomosha qilish mumkin</li>
     </ul>
   </div>`;
 }
 
-init();
+render();
 </script>
 </body>
 </html>
